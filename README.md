@@ -1,18 +1,18 @@
 # VMM-Database-Browser
 
-##Requirements
+## Requirements
 * [Qt 5.12]
 * C++11 (gcc>=4.7)
 
-##Installation
+## Installation
 To install follow the following steps:
 
-##Download 
+## Download 
 ```
 git clone https://github.com/FinnJaekel/VMM-Database-Browser.git
 ```
 
-##Compile Software
+## Compile Software
 Change to build folder
 ```
 cd VMM-Database-Browser/build
