@@ -1,0 +1,4 @@
+location IN ('Mainz')
+hybrid_id >='a0000000'
+hybrid_id <='MV-11'
+hybrid_id <='M13'

@@ -1,0 +1,3 @@
+vmm_class IN ('A','B','C')
+baseline between 150 and 190
+hybrid_id >='25'
