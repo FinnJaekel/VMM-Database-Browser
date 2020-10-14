@@ -16,7 +16,7 @@ git clone https://github.com/FinnJaekel/VMM-Database-Browser.git
 Change to build folder
 ```
 cd VMM-Database-Browser/build
-```l
+```
 Run qmake:
 ```
 qmake VMM_database_browser.pro
