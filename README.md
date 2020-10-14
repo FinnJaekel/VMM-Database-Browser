@@ -1,4 +1,5 @@
 # VMM-Database-Browser
+This is an analysis tool to evaluate the results of VMM-Hybrid testing using the VMM Slow control (https://gitlab.cern.ch/rd51-slow-control/vmmsc). 
 
 ## Requirements
 * [Qt 5.12]
