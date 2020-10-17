@@ -1082,14 +1082,14 @@ void DBHandler::evaluateData(QString type, QVector<double> x, QVector<double> y[
         double qGoodIntercept[2] = {m_mainWindow->m_dbwindow->ui->monitoringADC_g_l_2->text().toDouble(),m_mainWindow->m_dbwindow->ui->monitoringADC_g_u_2->text().toDouble()};
         double qOkIntercept[2] = {m_mainWindow->m_dbwindow->ui->monitoringADC_o_l_2->text().toDouble(),m_mainWindow->m_dbwindow->ui->monitoringADC_o_u_2->text().toDouble()};
         for(int i=0;i<2;i++){
-            if(slopeapprox[i]>=qGoodSlopes[0] && slopeapprox[i]<= qGoodSlopes[1] && y[i][0]>=qGoodIntercept[0] &&y[i][0]<=qGoodIntercept[1]){
+            if(slopeapprox[i]>=qGoodSlopes[0] && slopeapprox[i]<= qGoodSlopes[1] && intercept[i]>=qGoodIntercept[0] &&intercept[i]<=qGoodIntercept[1]){
                 labelvec[i]->setText("Monitoring ADC functional");
                 labelvec[i]->setStyleSheet("background-color: lightgreen");
                 //h_monitoringADC[i]=true;
                 h_VMMResults[i].insert("MonitoringADC",0);
             }
-            else if(((slopeapprox[i]<qGoodSlopes[0] || slopeapprox[i]>qGoodSlopes[1] || y[i][0]<qGoodIntercept[0] || y[i][0]>qGoodIntercept[1])) &&
-                     slopeapprox[i]>=qOkSlopes[0] && slopeapprox[i]<= qOkSlopes[1] && y[i][0]>=qOkIntercept[0] &&y[i][0]<=qOkIntercept[1]){
+            else if(((slopeapprox[i]<qGoodSlopes[0] || slopeapprox[i]>qGoodSlopes[1] || intercept[i]<qGoodIntercept[0] || intercept[i]>qGoodIntercept[1])) &&
+                     slopeapprox[i]>=qOkSlopes[0] && slopeapprox[i]<= qOkSlopes[1] && intercept[i]>=qOkIntercept[0] && intercept[i]<=qOkIntercept[1]){
                 labelvec[i]->setText("Monitoring ADC OK");
                 labelvec[i]->setStyleSheet("background-color: yellow");
                 //h_monitoringADC[i]=true;
