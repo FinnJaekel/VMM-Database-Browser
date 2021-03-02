@@ -1,12 +1,12 @@
 MonitoringADCSlope 0.75 0.85 0.7 0.9
 MonitoringADCIntercept 0   50 0   70
-Pedestal    150 190 140 200
+Pedestal    153.517 182.669 143.8 192.387
 BaselineNoise   2   3
 Threshold   15  20
-ADCCalibrationCurvatureInternIdeal  -0.0604396074478
-ADCCalibrationCurvatureExternIdeal  -0.070142162122
-ADCCalibrationCurvatureInternStddev 0.00896593791387
-ADCCalibrationCurvatureExternStddev 0.01
+ADCCalibrationCurvatureInternIdeal  -0.0558821430
+ADCCalibrationCurvatureExternIdeal  -0.07587889
+ADCCalibrationCurvatureInternStddev 0.00596572408
+ADCCalibrationCurvatureExternStddev 0.00608424
 ADCCalibrationChannelDeviation  40  50
 ADCCalibrationVertexPosIntern   28.23   34.45
 ADCCalibrationVertexPosExtern   27.28   35.99

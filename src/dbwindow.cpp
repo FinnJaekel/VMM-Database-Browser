@@ -45,9 +45,14 @@ void DBWindow::on_pushButton_refresh_clicked()
 
 void DBWindow::on_comboBox_MeasurementID_currentIndexChanged(const QString &arg1)
 {
+    QString currentSelection = m_mainWindow->m_dbwindow->ui->comboBox_MeasurementType->currentText();
+    if(!currentSelection.isEmpty()){
+        currentTypeSelection = currentSelection;
+    }
     m_mainWindow->m_dbwindow->ui->comboBox_MeasurementType->clear();
     QString h_id = m_dbhandler->getCurrentHybridID();
-    m_dbhandler->listAvailableMeasurementTypes(arg1,h_id);
+    int index = m_dbhandler->listAvailableMeasurementTypes(arg1,h_id,currentTypeSelection);
+    m_mainWindow->m_dbwindow->ui->comboBox_MeasurementType->setCurrentIndex(index);
     //emit on_pushButton_details_clicked();
 }
 

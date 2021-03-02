@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'dbwindow.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.11.1)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.9.5)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -12,7 +12,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'dbwindow.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.11.1. It"
+#error "This file was generated using the moc from 5.9.5. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -208,7 +208,7 @@ void DBWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            using _t = void (DBWindow::*)();
+            typedef void (DBWindow::*_t)();
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&DBWindow::readsettings)) {
                 *result = 0;
                 return;
@@ -217,7 +217,7 @@ void DBWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
     }
 }
 
-QT_INIT_METAOBJECT const QMetaObject DBWindow::staticMetaObject = {
+const QMetaObject DBWindow::staticMetaObject = {
     { &QMainWindow::staticMetaObject, qt_meta_stringdata_DBWindow.data,
       qt_meta_data_DBWindow,  qt_static_metacall, nullptr, nullptr}
 };

@@ -27,7 +27,7 @@ public:
     bool initiateDatabase();
     void listAvailableHybrids();
     void listAvailableMeasurements(QString Hybrid_ID);
-    void listAvailableMeasurementTypes(QString Measurement_ID, QString Hybrid_ID);
+    int listAvailableMeasurementTypes(QString Measurement_ID, QString Hybrid_ID,QString currentString);
     void plotData(QString measurementType, QString Measurement_ID, QString Hybrid_ID);
     QString getCurrentHybridID();
     void evaluateMeasurement(QString Hybrid_id);

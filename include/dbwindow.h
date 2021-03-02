@@ -81,6 +81,7 @@ private:
     Ui::dbwindow *ui;
     DBHandler* m_dbhandler;
     bool m_clearing = false;
+    QString currentTypeSelection;
 signals:
     void readsettings();
 

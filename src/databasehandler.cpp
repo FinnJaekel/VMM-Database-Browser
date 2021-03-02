@@ -496,16 +496,18 @@ void DBHandler::exportQueryToTxt(){
         QVector<QVector<double>> alldata;
         for(int j=0; j<cols;j++){
             QString data = table->model()->data(table->model()->index(i,j)).toString();
-            if(data.length()>128){
+            /*if(data.length()>128){
                 QVector<double> x = convertStrToVec(data);
                 alldata.push_back(x);
             }
             else{
                 line += data;
                 line += "\t";
-            }
+            }*/
+            line += data;
+            line += "\t";
         }
-        if(alldata.count()>0){
+        /*if(alldata.count()>0){
             line += "\n";
         }
         QVector<int> sizes;
@@ -524,7 +526,7 @@ void DBHandler::exportQueryToTxt(){
                 }
             }
             line += "\n";
-        }
+        }*/
 
         line+="\n";
         fp->write(line);
@@ -547,8 +549,9 @@ void DBHandler::listAvailableMeasurements(QString Hybrid_ID){
     db.close();
 }
 
-void DBHandler::listAvailableMeasurementTypes(QString Measurement_ID, QString Hybrid_ID){
+int DBHandler::listAvailableMeasurementTypes(QString Measurement_ID, QString Hybrid_ID, QString currentString){
     db.open();
+    QComboBox* box = m_mainWindow->m_dbwindow->ui->comboBox_MeasurementType;
     QSqlQuery query;
     QString querystring = "SELECT measurement_type FROM hybrid_data WHERE hybrid_id = ? AND measurement_id = ?";
     query.prepare(querystring);
@@ -565,8 +568,19 @@ void DBHandler::listAvailableMeasurementTypes(QString Measurement_ID, QString Hy
             }
         }while(query.previous());
     }
-    m_mainWindow->m_dbwindow->ui->comboBox_MeasurementType->setCurrentIndex(0);
+
+    int foundindex = 0;
+    for(int i=0;i<box->count();i++){
+        QString test = box->itemText(i);
+        cout << "Current test "<< currentString.toStdString()<< " compared to " << test.toStdString();
+        if(test.compare(currentString,Qt::CaseInsensitive)==0){
+            foundindex=i;
+        }
+    }
+    m_mainWindow->m_dbwindow->ui->comboBox_MeasurementType->setCurrentIndex(foundindex);
+//    m_mainWindow->m_dbwindow->ui->comboBox_MeasurementType->setCurrentIndex(0);
     db.close();
+    return foundindex;
 }
 
 void DBHandler::plotData(QString measurementType, QString Measurement_ID, QString Hybrid_ID){
@@ -620,6 +634,30 @@ void DBHandler::plotData(QString measurementType, QString Measurement_ID, QStrin
             QVector<double>pars;
             QVector<double> fits [2] = {evaluateADCCalibrationFit(x,y[0],"external",0,pars),evaluateADCCalibrationFit(x,y[1],"external",1,pars)};
             m_mainWindow->m_dbwindow->AddFitToPlot(x,fits,"Fit",2,m_mainWindow->m_dbwindow->ui->plot);
+        }
+        if(QString::compare(measurementType,"monitoringadc",Qt::CaseInsensitive)==0){
+            QVector<double> fits[2];
+            double slope[2];
+            double intercept[2];
+            QVector<double> xclean;
+            QVector<double> yclean[2];
+            for(int i=10;i<x.count();i++){
+                xclean.push_back(x[i]);
+                yclean[0].push_back(y[0][i]);
+                yclean[1].push_back(y[1][i]);
+            }
+            //FitLinear(xclean,yclean[0],slope[0],intercept[0]);
+            //FitLinear(xclean,yclean[1],slope[1],intercept[1]);
+            FitLinear(x,y[0],slope[0],intercept[0]);
+            FitLinear(x,y[1],slope[1],intercept[1]);
+            for(int i=0;i<x.count();i++){
+                for(int j=0;j<2;j++){
+                    double val = slope[j]*x[i]+intercept[j];
+                    fits[j].push_back(val);
+                }
+            }
+            m_mainWindow->m_dbwindow->AddFitToPlot(x,fits,"Fit",2,m_mainWindow->m_dbwindow->ui->plot);
+
         }
     }
 
@@ -1390,14 +1428,14 @@ QVector<double> DBHandler::evaluateADCCalibrationFit(QVector<double> datax, QVec
     bool markedcurve = false;
     bool markedpos = false;
     if(fabs(curvature)>=fabs(curveideal)){
-        if(fabs(curvature-curveideal)>=1.5*curvestd){
+        if(fabs(curvature-curveideal)>=5*curvestd){
             h_VMMResults[chip].insert(resultinsert1,2);
             labels[chip]->setStyleSheet("background-color: red");
             markedcurve =true;
         }
     }
     else{
-        if(fabs(curvature-curveideal)>=2.5*curvestd){
+        if(fabs(curvature-curveideal)>=5*curvestd){
             h_VMMResults[chip].insert(resultinsert1,2);
             labels[chip]->setStyleSheet("background-color: red");
             markedcurve =true;
@@ -1700,6 +1738,9 @@ void DBHandler::evaluateResults(){
         hybridclass = "c";
     }
     else if(vmmstati[0]=="E"){
+        if(vmmstati[1]=="A"|| vmmstati[1] == "B" || vmmstati[1] == "C"|| vmmstati[1] == "D"){
+            hybridclass = "c";
+        }
         if(vmmstati[1]=="E"){
             hybridclass = "d";
         }

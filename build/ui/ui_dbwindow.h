@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'dbwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.11.1
+** Created by: Qt User Interface Compiler version 5.9.5
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,7 +10,9 @@
 #define UI_DBWINDOW_H
 
 #include <QtCore/QVariant>
+#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QGridLayout>
@@ -1120,167 +1122,167 @@ public:
 
     void retranslateUi(QMainWindow *dbwindow)
     {
-        dbwindow->setWindowTitle(QApplication::translate("dbwindow", "MainWindow", nullptr));
-        groupBox->setTitle(QApplication::translate("dbwindow", "Database connection", nullptr));
+        dbwindow->setWindowTitle(QApplication::translate("dbwindow", "MainWindow", Q_NULLPTR));
+        groupBox->setTitle(QApplication::translate("dbwindow", "Database connection", Q_NULLPTR));
         adressfield->setHtml(QApplication::translate("dbwindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">localhost</p></body></html>", nullptr));
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">localhost</p></body></html>", Q_NULLPTR));
         portfield->setHtml(QApplication::translate("dbwindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">5432</p></body></html>", nullptr));
-        portlabel->setText(QApplication::translate("dbwindow", "Port:", nullptr));
-        adresslabel->setText(QApplication::translate("dbwindow", "Adress:", nullptr));
-        pushButton_connect->setText(QApplication::translate("dbwindow", "Connect", nullptr));
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">5432</p></body></html>", Q_NULLPTR));
+        portlabel->setText(QApplication::translate("dbwindow", "Port:", Q_NULLPTR));
+        adresslabel->setText(QApplication::translate("dbwindow", "Adress:", Q_NULLPTR));
+        pushButton_connect->setText(QApplication::translate("dbwindow", "Connect", Q_NULLPTR));
         dbnamefield->setHtml(QApplication::translate("dbwindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">testdb</p></body></html>", nullptr));
-        dbnamelabel->setText(QApplication::translate("dbwindow", "Database:", nullptr));
-        pushButton_refresh->setText(QApplication::translate("dbwindow", "Refresh", nullptr));
-        pushButton_3->setText(QApplication::translate("dbwindow", "Reload Defaults", nullptr));
-        groupBox_2->setTitle(QApplication::translate("dbwindow", "Hybrid Details", nullptr));
-        measurementIDlabel_2->setText(QApplication::translate("dbwindow", "Measurement Type", nullptr));
-        measurementIDlabel->setText(QApplication::translate("dbwindow", "Measurement ID", nullptr));
-        pushButton_details->setText(QApplication::translate("dbwindow", "Show Details", nullptr));
-        pushButton_configdownload->setText(QApplication::translate("dbwindow", "Download Config", nullptr));
-        pushButton_savePlot->setText(QApplication::translate("dbwindow", "Save PDF", nullptr));
-        label->setText(QApplication::translate("dbwindow", "Hybrid Class", nullptr));
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">testdb</p></body></html>", Q_NULLPTR));
+        dbnamelabel->setText(QApplication::translate("dbwindow", "Database:", Q_NULLPTR));
+        pushButton_refresh->setText(QApplication::translate("dbwindow", "Refresh", Q_NULLPTR));
+        pushButton_3->setText(QApplication::translate("dbwindow", "Reload Defaults", Q_NULLPTR));
+        groupBox_2->setTitle(QApplication::translate("dbwindow", "Hybrid Details", Q_NULLPTR));
+        measurementIDlabel_2->setText(QApplication::translate("dbwindow", "Measurement Type", Q_NULLPTR));
+        measurementIDlabel->setText(QApplication::translate("dbwindow", "Measurement ID", Q_NULLPTR));
+        pushButton_details->setText(QApplication::translate("dbwindow", "Show Details", Q_NULLPTR));
+        pushButton_configdownload->setText(QApplication::translate("dbwindow", "Download Config", Q_NULLPTR));
+        pushButton_savePlot->setText(QApplication::translate("dbwindow", "Save PDF", Q_NULLPTR));
+        label->setText(QApplication::translate("dbwindow", "Hybrid Class", Q_NULLPTR));
         hybrid_classlabel->setText(QString());
-        groupBox_3->setTitle(QApplication::translate("dbwindow", "Custom Criteria ", nullptr));
+        groupBox_3->setTitle(QApplication::translate("dbwindow", "Custom Criteria ", Q_NULLPTR));
         extchannels1label->setText(QString());
-        vmm2label->setText(QApplication::translate("dbwindow", "VMM 2", nullptr));
+        vmm2label->setText(QApplication::translate("dbwindow", "VMM 2", Q_NULLPTR));
         adcvertexstatus1label->setText(QString());
         adcvertexstatus3label->setText(QString());
         thresholdstatuslabel2->setText(QString());
-        label_36->setText(QApplication::translate("dbwindow", "Average TDC range", nullptr));
+        label_36->setText(QApplication::translate("dbwindow", "Average TDC range", Q_NULLPTR));
         adccurvestatus1label->setText(QString());
         adccurvestatus3label->setText(QString());
         adcstatuslabel1->setText(QString());
         intchannels2label->setText(QString());
-        threshold_g_l->setText(QApplication::translate("dbwindow", "15", nullptr));
-        threshold_o_l->setText(QApplication::translate("dbwindow", "20", nullptr));
-        label_20->setText(QApplication::translate("dbwindow", "mV", nullptr));
-        label_32->setText(QApplication::translate("dbwindow", "Baseline Noise", nullptr));
-        label_11->setText(QApplication::translate("dbwindow", "min", nullptr));
-        label_12->setText(QApplication::translate("dbwindow", "max", nullptr));
-        label_15->setText(QApplication::translate("dbwindow", "min", nullptr));
-        label_16->setText(QApplication::translate("dbwindow", "max", nullptr));
-        label_6->setText(QApplication::translate("dbwindow", "Good", nullptr));
-        label_7->setText(QApplication::translate("dbwindow", "OK", nullptr));
+        threshold_g_l->setText(QApplication::translate("dbwindow", "15", Q_NULLPTR));
+        threshold_o_l->setText(QApplication::translate("dbwindow", "20", Q_NULLPTR));
+        label_20->setText(QApplication::translate("dbwindow", "mV", Q_NULLPTR));
+        label_32->setText(QApplication::translate("dbwindow", "Baseline Noise", Q_NULLPTR));
+        label_11->setText(QApplication::translate("dbwindow", "min", Q_NULLPTR));
+        label_12->setText(QApplication::translate("dbwindow", "max", Q_NULLPTR));
+        label_15->setText(QApplication::translate("dbwindow", "min", Q_NULLPTR));
+        label_16->setText(QApplication::translate("dbwindow", "max", Q_NULLPTR));
+        label_6->setText(QApplication::translate("dbwindow", "Good", Q_NULLPTR));
+        label_7->setText(QApplication::translate("dbwindow", "OK", Q_NULLPTR));
         label_17->setText(QString());
-        monitoringADC_g_u->setText(QApplication::translate("dbwindow", "0.9", nullptr));
+        monitoringADC_g_u->setText(QApplication::translate("dbwindow", "0.9", Q_NULLPTR));
         label_18->setText(QString());
-        monitoringADC_o_l->setText(QApplication::translate("dbwindow", "0.4", nullptr));
-        monitoringADC_o_u->setText(QApplication::translate("dbwindow", "1", nullptr));
-        monitoringADC_g_l->setText(QApplication::translate("dbwindow", "0.5", nullptr));
-        monitoringADC_g_l_2->setText(QApplication::translate("dbwindow", "0", nullptr));
-        monitoringADC_g_u_2->setText(QApplication::translate("dbwindow", "100", nullptr));
-        monitoringADC_o_l_2->setText(QApplication::translate("dbwindow", "0", nullptr));
-        monitoringADC_o_u_2->setText(QApplication::translate("dbwindow", "200", nullptr));
-        label_28->setText(QApplication::translate("dbwindow", "mv", nullptr));
+        monitoringADC_o_l->setText(QApplication::translate("dbwindow", "0.4", Q_NULLPTR));
+        monitoringADC_o_u->setText(QApplication::translate("dbwindow", "1", Q_NULLPTR));
+        monitoringADC_g_l->setText(QApplication::translate("dbwindow", "0.5", Q_NULLPTR));
+        monitoringADC_g_l_2->setText(QApplication::translate("dbwindow", "0", Q_NULLPTR));
+        monitoringADC_g_u_2->setText(QApplication::translate("dbwindow", "100", Q_NULLPTR));
+        monitoringADC_o_l_2->setText(QApplication::translate("dbwindow", "0", Q_NULLPTR));
+        monitoringADC_o_u_2->setText(QApplication::translate("dbwindow", "200", Q_NULLPTR));
+        label_28->setText(QApplication::translate("dbwindow", "mv", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
-        thresholdlabel->setToolTip(QApplication::translate("dbwindow", "Maximum variation of threshold", nullptr));
+        thresholdlabel->setToolTip(QApplication::translate("dbwindow", "Maximum variation of threshold", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
-        thresholdlabel->setText(QApplication::translate("dbwindow", "Threshold", nullptr));
-        workingchannelsextlabel->setText(QApplication::translate("dbwindow", "Working Channels external", nullptr));
+        thresholdlabel->setText(QApplication::translate("dbwindow", "Threshold", Q_NULLPTR));
+        workingchannelsextlabel->setText(QApplication::translate("dbwindow", "Working Channels external", Q_NULLPTR));
         intchannels1label->setText(QString());
         adcvertexstatus2label->setText(QString());
         adcvertexstatus4label->setText(QString());
-        external_o_l->setText(QApplication::translate("dbwindow", "61", nullptr));
-        external_g_l->setText(QApplication::translate("dbwindow", "64", nullptr));
-        label_21->setText(QApplication::translate("dbwindow", "Chs", nullptr));
-        tdc_g_l->setText(QApplication::translate("dbwindow", "60", nullptr));
-        tdc_o_l->setText(QApplication::translate("dbwindow", "50", nullptr));
-        tdc_o_u->setText(QApplication::translate("dbwindow", "110", nullptr));
-        tdc_g_u->setText(QApplication::translate("dbwindow", "100", nullptr));
-        label_39->setText(QApplication::translate("dbwindow", "mV", nullptr));
-        internal_o_l->setText(QApplication::translate("dbwindow", "61", nullptr));
-        internal_g_l->setText(QApplication::translate("dbwindow", "64", nullptr));
-        label_22->setText(QApplication::translate("dbwindow", "Chs", nullptr));
-        workingchannelsintlabel->setText(QApplication::translate("dbwindow", "Working Channels internal", nullptr));
+        external_o_l->setText(QApplication::translate("dbwindow", "61", Q_NULLPTR));
+        external_g_l->setText(QApplication::translate("dbwindow", "64", Q_NULLPTR));
+        label_21->setText(QApplication::translate("dbwindow", "Chs", Q_NULLPTR));
+        tdc_g_l->setText(QApplication::translate("dbwindow", "60", Q_NULLPTR));
+        tdc_o_l->setText(QApplication::translate("dbwindow", "50", Q_NULLPTR));
+        tdc_o_u->setText(QApplication::translate("dbwindow", "110", Q_NULLPTR));
+        tdc_g_u->setText(QApplication::translate("dbwindow", "100", Q_NULLPTR));
+        label_39->setText(QApplication::translate("dbwindow", "mV", Q_NULLPTR));
+        internal_o_l->setText(QApplication::translate("dbwindow", "61", Q_NULLPTR));
+        internal_g_l->setText(QApplication::translate("dbwindow", "64", Q_NULLPTR));
+        label_22->setText(QApplication::translate("dbwindow", "Chs", Q_NULLPTR));
+        workingchannelsintlabel->setText(QApplication::translate("dbwindow", "Working Channels internal", Q_NULLPTR));
         pedestalstatuslabel1->setText(QString());
         adccurvestatus2label->setText(QString());
         adccurvestatus4label->setText(QString());
         tdcstatuslabel2->setText(QString());
-        adcmonitoringlabel->setText(QApplication::translate("dbwindow", "Monitoring ADC Slope", nullptr));
-        label_23->setText(QApplication::translate("dbwindow", "Monitoring ADC Intercept", nullptr));
+        adcmonitoringlabel->setText(QApplication::translate("dbwindow", "Monitoring ADC Slope", Q_NULLPTR));
+        label_23->setText(QApplication::translate("dbwindow", "Monitoring ADC Intercept", Q_NULLPTR));
         extchannels2label->setText(QString());
         noisestatus1label->setText(QString());
         tdcstatuslabel1->setText(QString());
-        pedestal_g_l->setText(QApplication::translate("dbwindow", "150", nullptr));
-        pedestal_o_l->setText(QApplication::translate("dbwindow", "140", nullptr));
-        pedestal_o_u->setText(QApplication::translate("dbwindow", "200", nullptr));
-        pedestal_g_u->setText(QApplication::translate("dbwindow", "190", nullptr));
-        label_19->setText(QApplication::translate("dbwindow", "mV", nullptr));
+        pedestal_g_l->setText(QApplication::translate("dbwindow", "150", Q_NULLPTR));
+        pedestal_o_l->setText(QApplication::translate("dbwindow", "140", Q_NULLPTR));
+        pedestal_o_u->setText(QApplication::translate("dbwindow", "200", Q_NULLPTR));
+        pedestal_g_u->setText(QApplication::translate("dbwindow", "190", Q_NULLPTR));
+        label_19->setText(QApplication::translate("dbwindow", "mV", Q_NULLPTR));
         thresholdstatuslabel1->setText(QString());
-        label_33->setText(QApplication::translate("dbwindow", "mV", nullptr));
-        noise_o_l->setText(QApplication::translate("dbwindow", "3", nullptr));
-        noise_g_l->setText(QApplication::translate("dbwindow", "2", nullptr));
+        label_33->setText(QApplication::translate("dbwindow", "mV", Q_NULLPTR));
+        noise_o_l->setText(QApplication::translate("dbwindow", "3", Q_NULLPTR));
+        noise_g_l->setText(QApplication::translate("dbwindow", "2", Q_NULLPTR));
         pedestalstatuslabel2->setText(QString());
-        pedestallabel->setText(QApplication::translate("dbwindow", "Pedestal", nullptr));
+        pedestallabel->setText(QApplication::translate("dbwindow", "Pedestal", Q_NULLPTR));
         noisestatus2label->setText(QString());
-        vmm1label->setText(QApplication::translate("dbwindow", "VMM 1", nullptr));
-        label_38->setText(QApplication::translate("dbwindow", "ADC Calibration Channel deviation", nullptr));
+        vmm1label->setText(QApplication::translate("dbwindow", "VMM 1", Q_NULLPTR));
+        label_38->setText(QApplication::translate("dbwindow", "ADC Calibration Channel deviation", Q_NULLPTR));
         adcstatuslabel2->setText(QString());
-        adcrange_o_l->setText(QApplication::translate("dbwindow", "40", nullptr));
-        adcrange_g_l->setText(QApplication::translate("dbwindow", "30", nullptr));
-        label_35->setText(QApplication::translate("dbwindow", "mV", nullptr));
-        label_3->setText(QApplication::translate("dbwindow", "Status of...", nullptr));
-        label_14->setText(QApplication::translate("dbwindow", "ADC Calibration Vertex pos", nullptr));
-        label_29->setText(QApplication::translate("dbwindow", "Extern", nullptr));
-        label_30->setText(QApplication::translate("dbwindow", "Intern", nullptr));
-        adcvertex_o_i->setText(QApplication::translate("dbwindow", "34.45", nullptr));
-        adcvertex_g_i->setText(QApplication::translate("dbwindow", "28.23", nullptr));
-        label_37->setText(QApplication::translate("dbwindow", "Ch", nullptr));
-        label_41->setText(QApplication::translate("dbwindow", "Ch", nullptr));
-        adcvertex_o_e->setText(QApplication::translate("dbwindow", "35.99", nullptr));
-        adcvertex_g_e->setText(QApplication::translate("dbwindow", "27.28", nullptr));
-        label_34->setText(QApplication::translate("dbwindow", "ADC Calibration Curvature", nullptr));
-        label_27->setText(QApplication::translate("dbwindow", "Extern", nullptr));
-        label_26->setText(QApplication::translate("dbwindow", "Intern", nullptr));
-        label_24->setText(QApplication::translate("dbwindow", "Criteria set in code", nullptr));
-        label_25->setText(QApplication::translate("dbwindow", "Criteria set in code", nullptr));
+        adcrange_o_l->setText(QApplication::translate("dbwindow", "40", Q_NULLPTR));
+        adcrange_g_l->setText(QApplication::translate("dbwindow", "30", Q_NULLPTR));
+        label_35->setText(QApplication::translate("dbwindow", "mV", Q_NULLPTR));
+        label_3->setText(QApplication::translate("dbwindow", "Status of...", Q_NULLPTR));
+        label_14->setText(QApplication::translate("dbwindow", "ADC Calibration Vertex pos", Q_NULLPTR));
+        label_29->setText(QApplication::translate("dbwindow", "Extern", Q_NULLPTR));
+        label_30->setText(QApplication::translate("dbwindow", "Intern", Q_NULLPTR));
+        adcvertex_o_i->setText(QApplication::translate("dbwindow", "34.45", Q_NULLPTR));
+        adcvertex_g_i->setText(QApplication::translate("dbwindow", "28.23", Q_NULLPTR));
+        label_37->setText(QApplication::translate("dbwindow", "Ch", Q_NULLPTR));
+        label_41->setText(QApplication::translate("dbwindow", "Ch", Q_NULLPTR));
+        adcvertex_o_e->setText(QApplication::translate("dbwindow", "35.99", Q_NULLPTR));
+        adcvertex_g_e->setText(QApplication::translate("dbwindow", "27.28", Q_NULLPTR));
+        label_34->setText(QApplication::translate("dbwindow", "ADC Calibration Curvature", Q_NULLPTR));
+        label_27->setText(QApplication::translate("dbwindow", "Extern", Q_NULLPTR));
+        label_26->setText(QApplication::translate("dbwindow", "Intern", Q_NULLPTR));
+        label_24->setText(QApplication::translate("dbwindow", "Criteria set in code", Q_NULLPTR));
+        label_25->setText(QApplication::translate("dbwindow", "Criteria set in code", Q_NULLPTR));
         adccal_bads1->setText(QString());
         adccal_bads2->setText(QString());
-        groupBox_6->setTitle(QApplication::translate("dbwindow", "Query Results", nullptr));
-        checkBox_filterLatest->setText(QApplication::translate("dbwindow", "Show only latest Measurements", nullptr));
-        pushButton_addfilter->setText(QApplication::translate("dbwindow", "Add Filter", nullptr));
-        pushButton_export->setText(QApplication::translate("dbwindow", "Export Table", nullptr));
-        groupBox_7->setTitle(QApplication::translate("dbwindow", "User Query", nullptr));
-        pushButton_getquery->setText(QApplication::translate("dbwindow", "Query Database", nullptr));
-        label_2->setText(QApplication::translate("dbwindow", "Enter your SQL-Query below", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("dbwindow", "Database and Hybrid overview", nullptr));
-        groupBox_4->setTitle(QApplication::translate("dbwindow", "Hybrid Statistics", nullptr));
-        pushButton_normcurve->setText(QApplication::translate("dbwindow", "getCurve", nullptr));
-        label_8->setText(QApplication::translate("dbwindow", "Bin Number", nullptr));
-        lineEdit_bins->setText(QApplication::translate("dbwindow", "50", nullptr));
-        pushButton_savepdf->setText(QApplication::translate("dbwindow", "Save as PDF", nullptr));
-        label_9->setText(QApplication::translate("dbwindow", "VMM Class Distribution", nullptr));
-        label_10->setText(QApplication::translate("dbwindow", "Hybrid Class Distribution", nullptr));
+        groupBox_6->setTitle(QApplication::translate("dbwindow", "Query Results", Q_NULLPTR));
+        checkBox_filterLatest->setText(QApplication::translate("dbwindow", "Show only latest Measurements", Q_NULLPTR));
+        pushButton_addfilter->setText(QApplication::translate("dbwindow", "Add Filter", Q_NULLPTR));
+        pushButton_export->setText(QApplication::translate("dbwindow", "Export Table", Q_NULLPTR));
+        groupBox_7->setTitle(QApplication::translate("dbwindow", "User Query", Q_NULLPTR));
+        pushButton_getquery->setText(QApplication::translate("dbwindow", "Query Database", Q_NULLPTR));
+        label_2->setText(QApplication::translate("dbwindow", "Enter your SQL-Query below", Q_NULLPTR));
+        tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("dbwindow", "Database and Hybrid overview", Q_NULLPTR));
+        groupBox_4->setTitle(QApplication::translate("dbwindow", "Hybrid Statistics", Q_NULLPTR));
+        pushButton_normcurve->setText(QApplication::translate("dbwindow", "getCurve", Q_NULLPTR));
+        label_8->setText(QApplication::translate("dbwindow", "Bin Number", Q_NULLPTR));
+        lineEdit_bins->setText(QApplication::translate("dbwindow", "50", Q_NULLPTR));
+        pushButton_savepdf->setText(QApplication::translate("dbwindow", "Save as PDF", Q_NULLPTR));
+        label_9->setText(QApplication::translate("dbwindow", "VMM Class Distribution", Q_NULLPTR));
+        label_10->setText(QApplication::translate("dbwindow", "Hybrid Class Distribution", Q_NULLPTR));
         lineEdit_locationFilter->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        label_4->setToolTip(QApplication::translate("dbwindow", "<html><head/><body><p>Enter location(s) separated by a comma. Entering a location here will list all hybrids at the specified location in the field to the right. If no locations are specified, all Hybrids in the database will be shown.</p></body></html>", nullptr));
+        label_4->setToolTip(QApplication::translate("dbwindow", "<html><head/><body><p>Enter location(s) separated by a comma. Entering a location here will list all hybrids at the specified location in the field to the right. If no locations are specified, all Hybrids in the database will be shown.</p></body></html>", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
-        label_4->setText(QApplication::translate("dbwindow", "Only list Hybrids from", nullptr));
+        label_4->setText(QApplication::translate("dbwindow", "Only list Hybrids from", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
-        label_5->setToolTip(QApplication::translate("dbwindow", "<html><head/><body><p>Selecting a Hybrid will show its ranking in the global Hybrid/VMM statistics</p></body></html>", nullptr));
+        label_5->setToolTip(QApplication::translate("dbwindow", "<html><head/><body><p>Selecting a Hybrid will show its ranking in the global Hybrid/VMM statistics</p></body></html>", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
-        label_5->setText(QApplication::translate("dbwindow", "Select Hybrid to compare", nullptr));
-        label_13->setText(QApplication::translate("dbwindow", "Apply Filters", nullptr));
+        label_5->setText(QApplication::translate("dbwindow", "Select Hybrid to compare", Q_NULLPTR));
+        label_13->setText(QApplication::translate("dbwindow", "Apply Filters", Q_NULLPTR));
         checkBox_filterApply->setText(QString());
-        pushButton_2->setText(QApplication::translate("dbwindow", "Save Distributions", nullptr));
-        groupBox_5->setTitle(QApplication::translate("dbwindow", "Filtering", nullptr));
-        pushButton->setText(QApplication::translate("dbwindow", "Remove selected Filter", nullptr));
-        pushButton_removeAllFilters->setText(QApplication::translate("dbwindow", "Remove all Filters", nullptr));
-        pushButton_storeFilters->setText(QApplication::translate("dbwindow", "Store Filters", nullptr));
-        pushButton_loadFilters->setText(QApplication::translate("dbwindow", "Load Filters", nullptr));
-        pushButton_addfilter_2->setText(QApplication::translate("dbwindow", "Add Filter", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("dbwindow", "Hybrid Statistics and Filtering", nullptr));
+        pushButton_2->setText(QApplication::translate("dbwindow", "Save Distributions", Q_NULLPTR));
+        groupBox_5->setTitle(QApplication::translate("dbwindow", "Filtering", Q_NULLPTR));
+        pushButton->setText(QApplication::translate("dbwindow", "Remove selected Filter", Q_NULLPTR));
+        pushButton_removeAllFilters->setText(QApplication::translate("dbwindow", "Remove all Filters", Q_NULLPTR));
+        pushButton_storeFilters->setText(QApplication::translate("dbwindow", "Store Filters", Q_NULLPTR));
+        pushButton_loadFilters->setText(QApplication::translate("dbwindow", "Load Filters", Q_NULLPTR));
+        pushButton_addfilter_2->setText(QApplication::translate("dbwindow", "Add Filter", Q_NULLPTR));
+        tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("dbwindow", "Hybrid Statistics and Filtering", Q_NULLPTR));
     } // retranslateUi
 
 };
