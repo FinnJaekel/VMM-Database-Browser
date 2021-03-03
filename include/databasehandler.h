@@ -73,7 +73,7 @@ private:
     QVector<double> getHistoLimits(QVector<double> y);
 
 
-    void getCurveSettings(QString caller, double &ideal, double &range);
+    void getCurveSettings(QString caller, double &ideal, double &range, double &idealH, double &rangeH);
 public slots:
     void showDetails();
     void doQuery();

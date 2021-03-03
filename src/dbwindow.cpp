@@ -12,6 +12,7 @@ DBWindow::DBWindow(MainWindow *top, QWidget *parent):
     ui->setupUi(this);
     ui->listWidget->setSelectionMode(QAbstractItemView::MultiSelection);
     //m_dbhandler = new DBHandler(m_mainWindow,this);
+    m_dummy = new QWidget(this);
 
 }
 
@@ -388,4 +389,12 @@ void DBWindow::on_pushButton_2_clicked()
 void DBWindow::on_pushButton_3_clicked()
 {
     m_dbhandler->readSettingFile();
+}
+
+void DBWindow::FillScrollArea()
+{
+    m_criteriaLayout = m_mainWindow->m_dbwindow->ui->CustomCriteriaGrid;
+    //m_dummy->setLayout(m_criteriaLayout);
+    //m_mainWindow->m_dbwindow->ui->scrollArea->setWidget(m_dummy);
+    //m_mainWindow->m_dbwindow->ui->scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 }

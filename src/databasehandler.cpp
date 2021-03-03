@@ -181,13 +181,14 @@ void DBHandler::showDetails(){
 }
 
 void DBHandler::evaluateMeasurement(QString Hybrid_id){
-    QLabel* alllabels[22] = {m_mainWindow->m_dbwindow->ui->pedestalstatuslabel1,m_mainWindow->m_dbwindow->ui->pedestalstatuslabel2,m_mainWindow->m_dbwindow->ui->thresholdstatuslabel1,m_mainWindow->m_dbwindow->ui->thresholdstatuslabel2,
+    int nlabelstoclear = 24;
+    QLabel* alllabels[24] = {m_mainWindow->m_dbwindow->ui->pedestalstatuslabel1,m_mainWindow->m_dbwindow->ui->pedestalstatuslabel2,m_mainWindow->m_dbwindow->ui->thresholdstatuslabel1,m_mainWindow->m_dbwindow->ui->thresholdstatuslabel2,
                           m_mainWindow->m_dbwindow->ui->extchannels1label,m_mainWindow->m_dbwindow->ui->extchannels2label,m_mainWindow->m_dbwindow->ui->intchannels1label,m_mainWindow->m_dbwindow->ui->intchannels2label,
                            m_mainWindow->m_dbwindow->ui->adccurvestatus1label,m_mainWindow->m_dbwindow->ui->adccurvestatus2label, m_mainWindow->m_dbwindow->ui->adccurvestatus3label, m_mainWindow->m_dbwindow->ui->adccurvestatus4label,
                             m_mainWindow->m_dbwindow->ui->tdcstatuslabel1,m_mainWindow->m_dbwindow->ui->tdcstatuslabel2,m_mainWindow->m_dbwindow->ui->noisestatus1label, m_mainWindow->m_dbwindow->ui->noisestatus2label,
                              m_mainWindow->m_dbwindow->ui->adccal_bads1,m_mainWindow->m_dbwindow->ui->adccal_bads2, m_mainWindow->m_dbwindow->ui->adcvertexstatus1label, m_mainWindow->m_dbwindow->ui->adcvertexstatus2label,
-                              m_mainWindow->m_dbwindow->ui->adcvertexstatus3label, m_mainWindow->m_dbwindow->ui->adcvertexstatus4label};
-    for(int i=0; i<22;i++){
+                              m_mainWindow->m_dbwindow->ui->adcvertexstatus3label, m_mainWindow->m_dbwindow->ui->adcvertexstatus4label,m_mainWindow->m_dbwindow->ui->adccal_bads3,m_mainWindow->m_dbwindow->ui->adccal_bads4};
+    for(int i=0; i<nlabelstoclear;i++){
         alllabels[i]->clear();
         alllabels[i]->setStyleSheet("background-color:");
     }
@@ -334,7 +335,7 @@ void DBHandler::readSettingFile()
                     m_mainWindow->m_dbwindow->ui->noise_o_l->setText(splitted[2]);
                 }
             }
-            if(splitted[0]=="Threshold"){
+            if(splitted[0]=="ThresholdVariation"){
                 if(splitted.count()<3){
                     cout << "incomplete configuration,"<<endl;
                 }
@@ -343,13 +344,37 @@ void DBHandler::readSettingFile()
                     m_mainWindow->m_dbwindow->ui->threshold_o_l->setText(splitted[2]);
                 }
             }
-            if(splitted[0]=="ADCCalibrationChannelDeviation"){
+            if(splitted[0]=="ThresholdDeviation"){
+                if(splitted.count()<3){
+                    cout << "incomplete configuration,"<<endl;
+                }
+                else{
+                    m_mainWindow->m_dbwindow->ui->threshold_diff_g_l->setText(splitted[1]);
+                    m_mainWindow->m_dbwindow->ui->threshold_diff_o_l->setText(splitted[3]);
+                    m_mainWindow->m_dbwindow->ui->threshold_diff_g_u->setText(splitted[2]);
+                    m_mainWindow->m_dbwindow->ui->threshold_diff_o_u->setText(splitted[4]);
+                    m_mainWindow->m_dbwindow->ui->threshold_diff_g_l->setCursorPosition(0);
+                    m_mainWindow->m_dbwindow->ui->threshold_diff_o_l->setCursorPosition(0);
+                    m_mainWindow->m_dbwindow->ui->threshold_diff_g_u->setCursorPosition(0);
+                    m_mainWindow->m_dbwindow->ui->threshold_diff_o_u->setCursorPosition(0);
+                }
+            }
+            if(splitted[0]=="ADCCalibrationChannelDeviationInternal"){
                 if(splitted.count()<3){
                     cout << "incomplete configuration,"<<endl;
                 }
                 else{
                     m_mainWindow->m_dbwindow->ui->adcrange_g_l->setText(splitted[1]);
                     m_mainWindow->m_dbwindow->ui->adcrange_o_l->setText(splitted[2]);
+                }
+            }
+            if(splitted[0]=="ADCCalibrationChannelDeviationExternal"){
+                if(splitted.count()<3){
+                    cout << "incomplete configuration,"<<endl;
+                }
+                else{
+                    m_mainWindow->m_dbwindow->ui->adcrange_g_l_ext->setText(splitted[1]);
+                    m_mainWindow->m_dbwindow->ui->adcrange_o_l_ext->setText(splitted[2]);
                 }
             }
             if(splitted[0]=="WorkingChannelsExternal"){
@@ -444,17 +469,23 @@ void DBHandler::dbdownloaded(QNetworkReply * pReply)
 }
 
 
-void DBHandler::getCurveSettings(QString caller, double &ideal, double &range)
+void DBHandler::getCurveSettings(QString caller, double &ideal, double &range, double &idealH, double &rangeH)
 {
     QString sIdeal = "ADCCalibrationCurvature";
     QString sRange = "ADCCalibrationCurvature";
+    QString sIdealH = "ADCCalibrationVertexHeight";
+    QString sRangeH = "ADCCalibrationVertexHeight";
     if(QString::compare(caller,"Internal",Qt::CaseInsensitive)==0){
         sIdeal += "InternIdeal";
         sRange += "InternStddev";
+        sIdealH += "InternIdeal";
+        sRangeH += "InternStddev";
     }
     if(QString::compare(caller,"External",Qt::CaseInsensitive)==0){
         sIdeal += "ExternIdeal";
         sRange += "ExternStddev";
+        sIdealH += "ExternIdeal";
+        sRangeH += "ExternStddev";
     }
 
     QString path = QCoreApplication::applicationDirPath()+"/../testsettings.txt";
@@ -477,6 +508,14 @@ void DBHandler::getCurveSettings(QString caller, double &ideal, double &range)
                 }
                 if(splitted[0]==sRange){
                     range = QVariant(splitted[1]).toDouble();
+                    cout << range<<endl;
+                }
+                if(splitted[0]==sIdealH){
+                    idealH = QVariant(splitted[1]).toDouble();
+                    cout << ideal<<endl;
+                }
+                if(splitted[0]==sRangeH){
+                    rangeH = QVariant(splitted[1]).toDouble();
                     cout << range<<endl;
                 }
             }
@@ -810,7 +849,7 @@ void DBHandler::evaluateData(QString type, QVector<double> x, QVector<double> y[
     else if(QString::compare(type,"thresholdscan",Qt::CaseInsensitive)==0){
         double avg[2] = {getAverage(y[0]),getAverage(y[1])};
         double stdds[2] = {getStdDev(y[0]),getStdDev(y[1])};
-        QLabel* labelvec[2] = {m_mainWindow->m_dbwindow->ui->thresholdstatuslabel1,m_mainWindow->m_dbwindow->ui->thresholdstatuslabel2};
+        QLabel* labelvec[4] = {m_mainWindow->m_dbwindow->ui->thresholdstatuslabel1,m_mainWindow->m_dbwindow->ui->thresholdstatuslabel2,m_mainWindow->m_dbwindow->ui->thr_diff_statuslabel1,m_mainWindow->m_dbwindow->ui->thr_diff_statuslabel2};
         double slopes[2] = {h_monitoringADCcal[0][0],h_monitoringADCcal[1][0]};
         double intercepts[2] = {h_monitoringADCcal[0][1],h_monitoringADCcal[1][1]};
         double DACsetting[2] = {getThresholdSetting(0),getThresholdSetting(1)};
@@ -819,6 +858,10 @@ void DBHandler::evaluateData(QString type, QVector<double> x, QVector<double> y[
         cout << "Expected Thresholds  " << setthreshold[0] << "\t" << setthreshold[1] <<endl;
         double qGood = m_mainWindow->m_dbwindow->ui->threshold_g_l->text().toDouble();
         double qOk = m_mainWindow->m_dbwindow->ui->threshold_o_l->text().toDouble();
+        double qGood2_u = m_mainWindow->m_dbwindow->ui->threshold_diff_g_u->text().toDouble();
+        double qGood2_l = m_mainWindow->m_dbwindow->ui->threshold_diff_g_l->text().toDouble();
+        double qOk2_u = m_mainWindow->m_dbwindow->ui->threshold_diff_o_u->text().toDouble();
+        double qOk2_l = m_mainWindow->m_dbwindow->ui->threshold_diff_o_l->text().toDouble();
         for(int i = 0; i<2;i++){
             double min = *std::min_element(y[i].begin(),y[i].end());
             double max = *std::max_element(y[i].begin(),y[i].end());
@@ -837,19 +880,40 @@ void DBHandler::evaluateData(QString type, QVector<double> x, QVector<double> y[
             }
         }
         for(int i=0;i<2;i++){
+            QString bads = "";
+            int nbads = 0;
+            int noks = 0;
             for(int j=0;j<64;j++){
-                if(fabs(y[i][j]-setthreshold[i])<qGood){
+                double chandev = y[i][j]-setthreshold[i];
+                if(chandev < qGood2_u && chandev > qGood2_l){
                     MarkChannel("Threshold",i,j,"good");
                 }
-                else if(fabs(y[i][j]-setthreshold[i])<qOk){
+                else if(chandev < qOk2_u && chandev > qOk2_l){
                     MarkChannel("Threshold",i,j,"ok");
+                    bads += QString::number(j)+", ";
+                    noks++;
                 }
                 else{
                     MarkChannel("Threshold",i,j,"bad");
+                    bads += QString::number(j)+", ";
+                    nbads++;
+                }
+            }
+            bads.chop(2);
+            labelvec[i+2]->setText(bads);
+            labelvec[i+2]->setToolTip(bads);
+            if(nbads>0){
+                labelvec[i+2]->setStyleSheet("background-color: red");
+            }
+            else{
+                if(noks>0){
+                    labelvec[i+2]->setStyleSheet("background-color: yellow");
+                }
+                else{
+                    labelvec[i+2]->setStyleSheet("background-color: lightgreen");
                 }
             }
         }
-
         return;
     }
     else if(QString::compare(type,"externalpulses",Qt::CaseInsensitive)==0){
@@ -1345,19 +1409,22 @@ QVector<double> DBHandler::evaluateADCCalibrationFit(QVector<double> datax, QVec
     QString resultinsert2;
     QLabel* labels[6];
     bool failedMeasurement =false;
-    double good_dev = m_mainWindow->m_dbwindow->ui->adcrange_g_l->text().toDouble();
-    double ok_dev = m_mainWindow->m_dbwindow->ui->adcrange_o_l->text().toDouble();
+    double good_dev =30;
+    double ok_dev = 40;
+
     if(QString::compare(caller,"Internal",Qt::CaseInsensitive)==0){
-        getCurveSettings("Internal",curveideal,curvestd);
+        good_dev = m_mainWindow->m_dbwindow->ui->adcrange_g_l->text().toDouble();
+        ok_dev = m_mainWindow->m_dbwindow->ui->adcrange_o_l->text().toDouble();
+        getCurveSettings("Internal",curveideal,curvestd,maxheightideal,maxheightstd);
 /*
         curveideal = -0.0604396074478;
         curvestd = 0.00896593791387;*/
         centerideal = 31.3400625589;
         centerstd = 1.55508392126;
 
-        cout << "Settings"<< curveideal <<"," << curvestd <<","<< centerideal<<","<<centerstd<<endl;
-        maxheightideal = 313.702862948;
-        maxheightstd = 16.2023985974;
+        cout << "Settings"<<curveideal <<"," << curvestd <<","<< centerideal<<","<<centerstd<<","<<maxheightideal << ","<<maxheightstd<<endl;
+//        maxheightideal = 310.25;
+//        maxheightstd = 10.21;
         resultinsert1 = "adcintcurvature";
         resultinsert2 = "adcintvertex";
         labels[0]=m_mainWindow->m_dbwindow->ui->adccurvestatus1label;
@@ -1370,24 +1437,26 @@ QVector<double> DBHandler::evaluateADCCalibrationFit(QVector<double> datax, QVec
         posrangeup = m_mainWindow->m_dbwindow->ui->adcvertex_o_i->text().toDouble();
     }
     else if(QString::compare(caller,"External",Qt::CaseInsensitive)==0){
-        getCurveSettings("External",curveideal,curvestd);
+        good_dev = m_mainWindow->m_dbwindow->ui->adcrange_g_l_ext->text().toDouble();
+        ok_dev = m_mainWindow->m_dbwindow->ui->adcrange_o_l_ext->text().toDouble();
+        getCurveSettings("External",curveideal,curvestd,maxheightideal,maxheightstd);
 /*
         curveideal = -0.070142162122;
         curvestd = 0.00628598041229;*/
         centerideal = 31.6371319652;
         centerstd = 2.17699310923;
 
-        cout << "Settings"<<curveideal <<"," << curvestd <<","<< centerideal<<","<<centerstd<<endl;
-        maxheightideal = 426.371640739;
-        maxheightstd = 18.5010979906;
+        cout << "Settings"<<curveideal <<"," << curvestd <<","<< centerideal<<","<<centerstd<<","<<maxheightideal << ","<<maxheightstd<<endl;
+//        maxheightideal = 461.3;
+//        maxheightstd = 17.97;
         resultinsert1 = "adcextcurvature";
         resultinsert2 = "adcextvertex";
         labels[0]=m_mainWindow->m_dbwindow->ui->adccurvestatus3label;
         labels[1]=m_mainWindow->m_dbwindow->ui->adccurvestatus4label;
         labels[2]=m_mainWindow->m_dbwindow->ui->adcvertexstatus3label;
         labels[3]=m_mainWindow->m_dbwindow->ui->adcvertexstatus4label;
-        labels[4]=m_mainWindow->m_dbwindow->ui->adccal_bads1;
-        labels[5]=m_mainWindow->m_dbwindow->ui->adccal_bads2;
+        labels[4]=m_mainWindow->m_dbwindow->ui->adccal_bads3;
+        labels[5]=m_mainWindow->m_dbwindow->ui->adccal_bads4;
         posrangelow = m_mainWindow->m_dbwindow->ui->adcvertex_g_e->text().toDouble();
         posrangeup = m_mainWindow->m_dbwindow->ui->adcvertex_o_e->text().toDouble();
     }
@@ -1446,7 +1515,7 @@ QVector<double> DBHandler::evaluateADCCalibrationFit(QVector<double> datax, QVec
         labels[chip+2]->setStyleSheet("background-color: red");
         markedpos =true;
     }
-    if(fabs(peakheight-maxheightideal)>3*maxheightstd){
+    if(fabs(peakheight-maxheightideal)>5*maxheightstd){
         h_VMMResults[chip].insert(resultinsert2,2);
         labels[chip+2]->setStyleSheet("background-color: red");
         markedpos =true;

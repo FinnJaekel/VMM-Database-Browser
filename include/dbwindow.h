@@ -21,7 +21,8 @@ class DBWindow : public QMainWindow
 public:
     explicit DBWindow(MainWindow *top, QWidget *parent=0);
     ~DBWindow();
-
+    QWidget* m_dummy;
+    QGridLayout *m_criteriaLayout;
     void PlotData(QVector<double> x, QVector<double> y[], QString xlabel, QString ylabel, QString name="", QString graphlabel="VMM", int datalen =2,QCustomPlot *plot=nullptr);
     void PlotHistogram(QVector<double> y, double xlow, double xhigh, int nbins, QString xlabel, QString ylabel, QString name, QString graphlabel);
     void AddFitToPlot(QVector<double> x, QVector<double> y[], QString graphlabel = "Fit", int datalen = 2,QCustomPlot *plot = nullptr);
@@ -75,6 +76,8 @@ private slots:
     void on_pushButton_2_clicked();
 
     void on_pushButton_3_clicked();
+
+    void FillScrollArea();
 
 private:
     MainWindow *m_mainWindow;
