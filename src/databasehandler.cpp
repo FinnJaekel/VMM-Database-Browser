@@ -103,6 +103,9 @@ void DBHandler::listAvailableHybrids(){
     cout << tablequery.toStdString()<<endl;
     model->setQuery(tablequery,db);
     table->setModel(model);
+    while(model->canFetchMore()){
+        model->fetchMore();
+    }
     table->horizontalHeader()->setDefaultAlignment(Qt::AlignCenter | (Qt::Alignment)Qt::TextWordWrap);
     //table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     table->setSelectionMode(QAbstractItemView::SingleSelection);
