@@ -2254,13 +2254,28 @@ void DBHandler::getVMMClassDistro(){
     plot->xAxis->grid()->setVisible(true);
     plot->xAxis->grid()->setPen(QPen(QColor(130, 130, 130), 0, Qt::DotLine));
     QVector<double> counts;
+    QVector<double> percents;
     counts << vals.count("A") << vals.count("B") << vals.count("C") << vals.count("D") << vals.count("E");
+    int nHybrids = vals.length();
     histo->setData(ticks,counts);
     histo->setName("VMM Class");
     histo->setPen(QPen(QColor(88, 208, 116).lighter(170)));
     histo->setBrush(QColor(88, 208, 116));
+    double spacing = counts[0]*0.1;
+    for(int i=0; i<counts.length();i++){
+        double percent_class =counts[i]/nHybrids*100;
+        percents.append(percent_class);
+        QCPItemText *textlabel = new QCPItemText(plot);
+        textlabel->setClipToAxisRect(false);
+        textlabel->position->setAxes(plot->xAxis,plot->yAxis);
+        textlabel->position->setType(QCPItemPosition::ptPlotCoords);
+        textlabel->position->setCoords(ticks[i],counts[i]+spacing);
+        textlabel->setText(QString::number(percents[i],'f',1)+"%");
+        textlabel->setPen(QPen(Qt::black));
+    }
     plot->rescaleAxes();
-    plot->yAxis->scaleRange(1.1);
+    plot->yAxis->scaleRange(1.4);
+    plot->yAxis->setRangeLower(0);
     plot->replot();
 
 }
@@ -2322,13 +2337,29 @@ void DBHandler::getHybridClassDistro(){
     plot->xAxis->grid()->setVisible(true);
     plot->xAxis->grid()->setPen(QPen(QColor(130, 130, 130), 0, Qt::DotLine));
     QVector<double> counts;
+    QVector<double> percents;
     counts << vals.count("a")/2 << vals.count("b")/2 << vals.count("c")/2 << vals.count("d")/2;
+    int nHybrids = vals.length()/2;
     histo->setData(ticks,counts);
     histo->setName("Hybrid Class");
     histo->setPen(QPen(QColor(88, 208, 116).lighter(170)));
     histo->setBrush(QColor(88, 208, 116));
+    double spacing = counts[0]*0.1;
+    for(int i=0; i<counts.length();i++){
+        double percent_class =counts[i]/nHybrids*100;
+        percents.append(percent_class);
+        QCPItemText *textlabel = new QCPItemText(plot);
+        textlabel->setClipToAxisRect(false);
+        textlabel->position->setAxes(plot->xAxis,plot->yAxis);
+        textlabel->position->setType(QCPItemPosition::ptPlotCoords);
+        textlabel->position->setCoords(ticks[i],counts[i]+spacing);
+        textlabel->setText(QString::number(percents[i],'f',1)+"%");
+        textlabel->setPen(QPen(Qt::black));
+    }
+
     plot->rescaleAxes();
-    plot->yAxis->scaleRange(1.1);
+    plot->yAxis->scaleRange(1.4);
+    plot->yAxis->setRangeLower(0);
     plot->replot();
 
 }
