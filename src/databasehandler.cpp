@@ -77,7 +77,7 @@ void DBHandler::listAvailableHybrids(){
     QSqlQueryModel *model = new QSqlQueryModel();
     QTableView* table = m_mainWindow->m_dbwindow->ui->tableView;
     QItemSelectionModel *selectmodel = table->selectionModel();
-    QString tablequery = "SELECT * FROM hybrid_overview ";
+    QString tablequery = "SELECT * FROM hybrid_overview_view ";
     if(m_mainWindow->m_dbwindow->ui->checkBox_filterLatest->isChecked()==true){
         QString latestMeasFilter = getLatestMeasurementFilter();
         if(latestMeasFilter.size()>0){
