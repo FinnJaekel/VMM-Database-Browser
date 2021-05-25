@@ -19,8 +19,5 @@ ADCCalibrationVertexPosExtern   26.73   35.32
 AverageTDCRange 60  180 50  200
 WorkingChannelsExternal 64  61
 WorkingChannelsInternal 64  61
-DatabaseIP  127.0.0.1
-DatabaseName    testdb
-DatabasePort    5432
-DatabaseUser    fjaekel
-DatabasePassword    1234
+DatabaseURL  https://finnjaekel.github.io/VMM-test-result-database/testdb.db
+

@@ -6,6 +6,7 @@
 #include <QInputDialog>
 #include <QFont>
 #include <QNetworkAccessManager>
+#include <QAbstractNetworkCache>
 #include <QNetworkRequest>
 #include <QNetworkReply>
 #include <iostream>
@@ -13,6 +14,7 @@
 //#include <qcustomplot.h>
 #include "databasehandler.h"
 #include <filterdialog.h>
+#include "logwindow.h"
 #include <PolynomialRegression.h>
 
 using namespace std;
@@ -20,8 +22,9 @@ DBHandler::DBHandler(MainWindow *top, QObject *parent)
 {
     m_mainWindow = top;
     db = QSqlDatabase::addDatabase("QSQLITE");
+    m_WebCtrl = new QNetworkAccessManager();
     //db = QSqlDatabase::addDatabase("QPSQL");
-    downloadDB();
+    //downloadDB();
 }
 DBHandler::~DBHandler(){
     delete this;
@@ -36,21 +39,42 @@ bool DBHandler::initiateDatabase(){
     return working;
 }
 
-bool DBHandler::downloadDB(){
+bool DBHandler::downloadDB(QString url){
     cout << "Trying to download DB"<<endl;
-    connect(&m_WebCtrl,SIGNAL(finished(QNetworkReply*)),this,SLOT(dbdownloaded(QNetworkReply*)));
-    QNetworkRequest request(QUrl("https://finnjaekel.github.io/VMM-test-result-database/testdb.db"));
-    m_WebCtrl.get(request);
+    QUrl site = QUrl(url);
+    connect(m_WebCtrl,SIGNAL(finished(QNetworkReply*)),this,SLOT(dbdownloaded(QNetworkReply*)));
+    QNetworkRequest request(site);
+    m_WebCtrl->get(request);
+    m_mainWindow->m_dbwindow->ui->pushButton_redownload->setEnabled(false);
+    //m_WebCtrl.deleteResource(request);
     cout << "Request send"<<endl;
 }
 
+bool DBHandler::getLog(QString measID)
+{
+    db.open();
+    QSqlQuery query;
+    QString text = "SELECT llog FROM logs WHERE Measurement_ID = ?;";
+    query.prepare(text);
+    query.bindValue(0,measID);
+    query.exec();
+    query.first();
+    QString obtainedLog = query.value(0).toString();
+    cout << obtainedLog.toStdString()<<endl;
+    LogWindow lwindow(m_mainWindow);
+    lwindow.setLogText(obtainedLog);
+    lwindow.exec();
+    db.close();
+    return true;
+}
+
 void DBHandler::getConnectionInformation(){
-    QString hostname = m_mainWindow->m_dbwindow->ui->adressfield->toPlainText();
-    QString port = m_mainWindow->m_dbwindow->ui->portfield->toPlainText();
-    QString dbname = m_mainWindow->m_dbwindow->ui->dbnamefield->toPlainText();
-    db.setHostName(hostname);
-    db.setPort(port.toInt());
-    db.setDatabaseName(dbname);
+    //QString hostname = m_mainWindow->m_dbwindow->ui->adressfield->toPlainText();
+    //QString port = m_mainWindow->m_dbwindow->ui->portfield->toPlainText();
+    //QString dbname = m_mainWindow->m_dbwindow->ui->dbnamefield->toPlainText();
+    //db.setHostName(hostname);
+    //db.setPort(port.toInt());
+    //db.setDatabaseName(dbname);
     db.setDatabaseName(QCoreApplication::applicationDirPath()+"/testdb.db");
 }
 
@@ -419,7 +443,7 @@ void DBHandler::readSettingFile()
                     m_mainWindow->m_dbwindow->ui->adcvertex_o_i->setText(splitted[2]);
                 }
             }
-            if(splitted[0]=="DatabaseIP"){
+            if(splitted[0]=="DatabaseURL"){
                 if(splitted.count()<2){
                     cout << "incomplete configuration,"<<endl;
                 }
@@ -432,7 +456,7 @@ void DBHandler::readSettingFile()
                     cout << "incomplete configuration,"<<endl;
                 }
                 else{
-                    m_mainWindow->m_dbwindow->ui->dbnamefield->setText(splitted[1]);
+                    //m_mainWindow->m_dbwindow->ui->dbnamefield->setText(splitted[1]);
                 }
             }
             if(splitted[0]=="DatabasePort"){
@@ -440,7 +464,7 @@ void DBHandler::readSettingFile()
                     cout << "incomplete configuration,"<<endl;
                 }
                 else{
-                    m_mainWindow->m_dbwindow->ui->portfield->setText(splitted[1]);
+                    //m_mainWindow->m_dbwindow->ui->portfield->setText(splitted[1]);
                 }
             }
             if(splitted[0]=="DatabaseUser"){
@@ -448,7 +472,7 @@ void DBHandler::readSettingFile()
                     cout << "incomplete configuration,"<<endl;
                 }
                 else{
-                    this->db.setUserName(splitted[1]);
+                    //this->db.setUserName(splitted[1]);
                 }
             }
             if(splitted[0]=="DatabasePassword"){
@@ -456,7 +480,7 @@ void DBHandler::readSettingFile()
                     cout << "incomplete configuration,"<<endl;
                 }
                 else{
-                    this->db.setPassword(splitted[1]);
+                    //this->db.setPassword(splitted[1]);
                 }
             }
         }
@@ -472,6 +496,11 @@ void DBHandler::dbdownloaded(QNetworkReply * pReply)
     dbfile.open(QIODevice::WriteOnly);
     dbfile.write(downloaded);
     dbfile.close();
+    pReply->deleteLater();
+    m_mainWindow->m_dbwindow->ui->pushButton_redownload->setEnabled(true);
+    m_WebCtrl->deleteLater();
+    m_WebCtrl = new QNetworkAccessManager();
+
 }
 
 
@@ -591,6 +620,7 @@ void DBHandler::listAvailableMeasurements(QString Hybrid_ID){
             m_mainWindow->m_dbwindow->ui->comboBox_MeasurementID->addItem(query.value(0).toString());
         }while(query.previous());
     }
+    m_mainWindow->m_dbwindow->ui->pushButton_log->setEnabled(true);
     db.close();
 }
 
@@ -1618,7 +1648,7 @@ void DBHandler::evaluateResults(){
                 }
                 else{
                     //Channel not connected to detector (fixable)
-                    fixable==true;
+                    fixable=true;
                 }
             }
             QStringList badtests;

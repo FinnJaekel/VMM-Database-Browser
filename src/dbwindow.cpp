@@ -398,3 +398,15 @@ void DBWindow::FillScrollArea()
     //m_mainWindow->m_dbwindow->ui->scrollArea->setWidget(m_dummy);
     //m_mainWindow->m_dbwindow->ui->scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 }
+
+void DBWindow::on_pushButton_redownload_clicked()
+{
+    QString downloadURL = m_mainWindow->m_dbwindow->ui->adressfield->toPlainText();
+    m_dbhandler->downloadDB(downloadURL);
+}
+
+void DBWindow::on_pushButton_log_clicked()
+{
+    QString measID = m_mainWindow->m_dbwindow->ui->comboBox_MeasurementID->currentText();
+    m_dbhandler->getLog(measID);
+}

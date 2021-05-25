@@ -39,14 +39,16 @@ public:
     void showHybridInHisto(QString hybrid_id);
     void getVMMClassDistro();
     void getHybridClassDistro();
-    bool downloadDB();
+   //bool downloadDB(QString url = "https://finnjaekel.github.io/VMM-test-result-database/testdb.db");
+    bool downloadDB(QString url);
+    bool getLog(QString measID);
 
 private:
     QHash<QString,int> h_ChannelResults[2][64];
     QHash<QString,int> h_VMMResults[2];
     int h_nwchannels[2] = {64,64};
     double h_monitoringADCcal[2][2];
-    QNetworkAccessManager m_WebCtrl;
+    QNetworkAccessManager* m_WebCtrl;
     void getUserInformation();
     void getConnectionInformation();
     MainWindow* m_mainWindow;
@@ -78,7 +80,7 @@ public slots:
     void showDetails();
     void doQuery();
     void readSettingFile();
-    void dbdownloaded(QNetworkReply*pReply);
+    void dbdownloaded(QNetworkReply *pReply);
 
 };
 

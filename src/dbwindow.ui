@@ -35,7 +35,7 @@
        <rect>
         <x>10</x>
         <y>10</y>
-        <width>631</width>
+        <width>681</width>
         <height>121</height>
        </rect>
       </property>
@@ -45,10 +45,10 @@
       <widget class="QTextEdit" name="adressfield">
        <property name="geometry">
         <rect>
-         <x>80</x>
+         <x>200</x>
          <y>30</y>
-         <width>121</width>
-         <height>31</height>
+         <width>471</width>
+         <height>41</height>
         </rect>
        </property>
        <property name="html">
@@ -59,47 +59,12 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Sans Serif'; font-size:9pt;&quot;&gt;localhost&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
-      <widget class="QTextEdit" name="portfield">
-       <property name="geometry">
-        <rect>
-         <x>270</x>
-         <y>30</y>
-         <width>121</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="html">
-        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Sans Serif'; font-size:9pt;&quot;&gt;5432&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="portlabel">
-       <property name="geometry">
-        <rect>
-         <x>220</x>
-         <y>33</y>
-         <width>81</width>
-         <height>21</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>12</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Port:</string>
-       </property>
-      </widget>
       <widget class="QLabel" name="adresslabel">
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>33</y>
-         <width>81</width>
+         <y>40</y>
+         <width>181</width>
          <height>21</height>
         </rect>
        </property>
@@ -109,14 +74,14 @@ p, li { white-space: pre-wrap; }
         </font>
        </property>
        <property name="text">
-        <string>Adress:</string>
+        <string>Database Download URL:</string>
        </property>
       </widget>
       <widget class="QPushButton" name="pushButton_connect">
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>80</y>
+         <y>90</y>
          <width>121</width>
          <height>22</height>
         </rect>
@@ -125,49 +90,14 @@ p, li { white-space: pre-wrap; }
         <string>Connect</string>
        </property>
       </widget>
-      <widget class="QTextEdit" name="dbnamefield">
-       <property name="geometry">
-        <rect>
-         <x>500</x>
-         <y>33</y>
-         <width>121</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="html">
-        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Sans Serif'; font-size:9pt;&quot;&gt;testdb&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="dbnamelabel">
-       <property name="geometry">
-        <rect>
-         <x>410</x>
-         <y>33</y>
-         <width>81</width>
-         <height>21</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>12</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Database:</string>
-       </property>
-      </widget>
       <widget class="QPushButton" name="pushButton_refresh">
        <property name="enabled">
         <bool>false</bool>
        </property>
        <property name="geometry">
         <rect>
-         <x>150</x>
-         <y>80</y>
+         <x>290</x>
+         <y>90</y>
          <width>121</width>
          <height>22</height>
         </rect>
@@ -185,14 +115,36 @@ p, li { white-space: pre-wrap; }
       <widget class="QPushButton" name="pushButton_3">
        <property name="geometry">
         <rect>
-         <x>290</x>
-         <y>80</y>
+         <x>430</x>
+         <y>90</y>
          <width>111</width>
          <height>22</height>
         </rect>
        </property>
        <property name="text">
         <string>Reload Defaults</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_redownload">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>150</x>
+         <y>90</y>
+         <width>121</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Download</string>
+       </property>
+       <property name="checkable">
+        <bool>false</bool>
+       </property>
+       <property name="flat">
+        <bool>false</bool>
        </property>
       </widget>
      </widget>
@@ -211,7 +163,7 @@ p, li { white-space: pre-wrap; }
       <widget class="QLabel" name="measurementIDlabel_2">
        <property name="geometry">
         <rect>
-         <x>190</x>
+         <x>210</x>
          <y>20</y>
          <width>131</width>
          <height>21</height>
@@ -232,7 +184,7 @@ p, li { white-space: pre-wrap; }
       <widget class="QComboBox" name="comboBox_MeasurementType">
        <property name="geometry">
         <rect>
-         <x>190</x>
+         <x>210</x>
          <y>50</y>
          <width>131</width>
          <height>22</height>
@@ -244,7 +196,7 @@ p, li { white-space: pre-wrap; }
         <rect>
          <x>10</x>
          <y>50</y>
-         <width>131</width>
+         <width>171</width>
          <height>22</height>
         </rect>
        </property>
@@ -308,10 +260,10 @@ p, li { white-space: pre-wrap; }
        </property>
        <property name="geometry">
         <rect>
-         <x>30</x>
+         <x>10</x>
          <y>80</y>
          <width>91</width>
-         <height>22</height>
+         <height>21</height>
         </rect>
        </property>
        <property name="text">
@@ -324,10 +276,10 @@ p, li { white-space: pre-wrap; }
        </property>
        <property name="geometry">
         <rect>
-         <x>190</x>
+         <x>210</x>
          <y>80</y>
          <width>131</width>
-         <height>22</height>
+         <height>21</height>
         </rect>
        </property>
        <property name="text">
@@ -372,6 +324,22 @@ p, li { white-space: pre-wrap; }
          </widget>
         </item>
        </layout>
+      </widget>
+      <widget class="QPushButton" name="pushButton_log">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>110</x>
+         <y>80</y>
+         <width>71</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Show Log</string>
+       </property>
       </widget>
      </widget>
      <widget class="QGroupBox" name="groupBox_3">

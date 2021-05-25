@@ -79,6 +79,10 @@ private slots:
 
     void FillScrollArea();
 
+    void on_pushButton_redownload_clicked();
+
+    void on_pushButton_log_clicked();
+
 private:
     MainWindow *m_mainWindow;
     Ui::dbwindow *ui;
