@@ -2171,19 +2171,19 @@ void DBHandler::showHybridInHisto(QString hybrid_id)
         textLabel1->position->setTypeX(QCPItemPosition::ptPlotCoords);
         textLabel1->position->setTypeY(QCPItemPosition::ptViewportRatio);
         int classint =0;
-        if(vmmclass == "A"){
+        if(vmmclass == "A" || vmmclass == "A-"){
             classint = 1;
         }
-        if(vmmclass == "B"){
+        if(vmmclass == "B" || vmmclass == "B-"){
             classint = 2;
         }
-        if(vmmclass == "C"){
+        if(vmmclass == "C" || vmmclass == "C-"){
             classint = 3;
         }
-        if(vmmclass == "D"){
+        if(vmmclass == "D" || vmmclass == "D-"){
             classint = 4;
         }
-        if(vmmclass == "E"){
+        if(vmmclass == "E" || vmmclass == "E-"){
             classint = 5;
         }
         textLabel1->position->setCoords(classint, 0);
@@ -2269,6 +2269,7 @@ void DBHandler::getVMMClassDistro(){
     plot->legend->setFillOrder(QCPLegend::foColumnsFirst);
     plot->plotLayout()->setRowStretchFactor(1, 0.001);
     QCPBars* histo = new QCPBars(plot->xAxis, plot->yAxis);
+    QCPBars* histoMinus = new QCPBars(plot->xAxis,plot->yAxis);
     QVector<double> ticks;
     QVector<QString> labels;
     ticks << 1 << 2 << 3 << 4 << 5;
@@ -2284,22 +2285,29 @@ void DBHandler::getVMMClassDistro(){
     plot->xAxis->grid()->setVisible(true);
     plot->xAxis->grid()->setPen(QPen(QColor(130, 130, 130), 0, Qt::DotLine));
     QVector<double> counts;
+    QVector<double> countsMinus;
     QVector<double> percents;
     counts << vals.count("A") << vals.count("B") << vals.count("C") << vals.count("D") << vals.count("E");
+    countsMinus << vals.count("A-") << vals.count("B-") << vals.count("C-") << vals.count("D-") << vals.count("E-");
     int nHybrids = vals.length();
     histo->setData(ticks,counts);
     histo->setName("VMM Class");
     histo->setPen(QPen(QColor(88, 208, 116).lighter(170)));
     histo->setBrush(QColor(88, 208, 116));
-    double spacing = counts[0]*0.1;
+    histoMinus->setData(ticks,countsMinus);
+    histoMinus->setPen(QPen(QColor(255, 249, 15).lighter(170)));
+    histoMinus->setBrush(QColor(255, 249, 15));
+    histoMinus->moveAbove(histo);
+    histoMinus->setName("Pedestal Problem");
+    double spacing = (counts[0]+countsMinus[0])*0.1;
     for(int i=0; i<counts.length();i++){
-        double percent_class =counts[i]/nHybrids*100;
+        double percent_class = (counts[i]+countsMinus[i])/nHybrids*100;
         percents.append(percent_class);
         QCPItemText *textlabel = new QCPItemText(plot);
         textlabel->setClipToAxisRect(false);
         textlabel->position->setAxes(plot->xAxis,plot->yAxis);
         textlabel->position->setType(QCPItemPosition::ptPlotCoords);
-        textlabel->position->setCoords(ticks[i],counts[i]+spacing);
+        textlabel->position->setCoords(ticks[i],counts[i]+countsMinus[i]+spacing);
         textlabel->setText(QString::number(percents[i],'f',1)+"%");
         textlabel->setPen(QPen(Qt::black));
     }
