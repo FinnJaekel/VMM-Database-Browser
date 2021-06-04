@@ -35,7 +35,6 @@ QT      += network
 QT      += widgets
 QT      += xml
 QT      += concurrent
-QT      += serialport
 QT      += sql
 
 
@@ -81,14 +80,15 @@ SOURCES +=  $$sourcepath/main.cpp \
             $$sourcepath/databasehandler.cpp \
             $$sourcepath/dbwindow.cpp \
             $$sourcepath/qcustomplot.cpp \
-            $$sourcepath/filterdialog.cpp
+            $$sourcepath/filterdialog.cpp \
+            $$sourcepath/logwindow.cpp
 
 HEADERS +=  $$includepath/mainwindow.h \
             $$includepath/databasehandler.h \
             $$includepath/dbwindow.h \
             $$includepath/qcustomplot.h \
             $$includepath/filterdialog.h \
-            $$includepath/PolyonmialRegression.h
+            $$includepath/logwindow.h
 
 FORMS   +=  $$sourcepath/dbwindow.ui \
 

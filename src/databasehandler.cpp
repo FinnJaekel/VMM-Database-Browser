@@ -832,6 +832,69 @@ void DBHandler::evaluateData(QString type, QVector<double> x, QVector<double> y[
         QVector<double> nooutliers[2];
         for(int i = 0; i<2;i++){
             //pedestals[i]=QVector<double>::fromStdVector(m_calibmod->m_mean[0][m_FEC_test][m_HDMI_test][0][i]);
+            int nBads=0;
+            for(int j = 0;j<64; j++){
+                double ped = y[i][j];
+                if(ped>=qGood[0] && ped<=qGood[1]){
+                    MarkChannel("Pedestal",i,j,"good");
+                }
+                else if(ped>=qOk[0] && ped<=qOk[1]){
+                    MarkChannel("Pedestal",i,j,"ok");
+                }
+                else if(ped<qOk[0] || ped>qOk[1]){
+                    MarkChannel("Pedestal",i,j,"bad");
+                    nBads++;
+                }
+                else{
+                    MarkChannel("Pedestal",i,j,"unknown");
+                }
+            }
+            if(nBads>4){
+                h_VMMResults[i].insert("BadPedestal",1);
+            }
+        }
+        for(int i=0;i<2;i++){
+            for(int j=0;j<64;j++){
+                if(outliers[i].find(j)==outliers[i].end()){
+                        nooutliers[i].push_back(y[i][j]);
+                }
+            }
+        }
+        double avg[2] = {getAverage(nooutliers[0]),getAverage(nooutliers[1])};
+        double stdds[2] = {getStdDev(nooutliers[0]),getStdDev(nooutliers[1])};
+
+
+        QLabel* labelvec[2] = {m_mainWindow->m_dbwindow->ui->pedestalstatuslabel1,m_mainWindow->m_dbwindow->ui->pedestalstatuslabel2};
+        QString exports[2] = {"",""};
+        //Evaluate found Data
+        for(int i = 0; i<2;i++){
+                labelvec[i]->setWordWrap(true);
+                QString labeltext = QString(QString::number(avg[i],'f',1)); //+ " ± " +QString(QString::number(stdds[i],'f',1))+" mV";
+                labelvec[i]->setText(labeltext);
+                if(avg[i]>qGood[0] && avg[i]<qGood[1]){
+                    labelvec[i]->setStyleSheet("background-color: lightgreen");
+                    h_VMMResults[i].insert("Pedestal",0);
+               }
+                else if(avg[i]>qOk[0] && avg[i]<qOk[1] && (avg[i]<qGood[0] || avg[i]>qGood[1])){
+                    labelvec[i]->setStyleSheet("background-color: yellow");
+                    h_VMMResults[i].insert("Pedestal",1);
+                }
+                else{
+                    labelvec[i]->setStyleSheet("background-color: red");
+                    h_VMMResults[i].insert("Pedestal",2);
+                }
+        }
+        return;
+    }
+    else if(QString::compare(type,"pedestal2",Qt::CaseInsensitive)==0){
+        double qGood[2] = {m_mainWindow->m_dbwindow->ui->pedestal_g_l->text().toDouble(),m_mainWindow->m_dbwindow->ui->pedestal_g_u->text().toDouble()};
+        double qOk[2] = {m_mainWindow->m_dbwindow->ui->pedestal_o_l->text().toDouble(),m_mainWindow->m_dbwindow->ui->pedestal_o_u->text().toDouble()};
+        std::set<int> outliers[2];
+        outliers[0] = findOutliers(y[0],100);
+        outliers[1] = findOutliers(y[1],100);
+        QVector<double> nooutliers[2];
+        for(int i = 0; i<2;i++){
+            //pedestals[i]=QVector<double>::fromStdVector(m_calibmod->m_mean[0][m_FEC_test][m_HDMI_test][0][i]);
             int n=0;
             for(int j = 0;j<64; j++){
                 double ped = y[i][j];
@@ -1731,7 +1794,7 @@ void DBHandler::evaluateResults(){
         double avgresult = total2/ntestsmade;
         if(keys2.contains("MonitoringADC")==true){
             if(h_VMMResults[j].value("MonitoringADC")==2){
-            vmmstati[j] = "Bad";
+            vmmstati[j] = "E";
             vmmlabels[j]->setStyleSheet("background-color: red");
             vmmlabels[j]->setText("VMM"+QString::number(j)+": E");
             }
@@ -1855,6 +1918,12 @@ void DBHandler::evaluateResults(){
     }
     else{
         hybridclass = "unknown";
+    }
+    for(int i=0;i<2;i++){
+        if(h_VMMResults[i].value("BadPedestal")==1){
+            vmmstati[i].append("-");
+            vmmlabels[i]->setText("VMM"+QString::number(i)+": "+vmmstati[i]);
+        }
     }
 
     m_mainWindow->m_dbwindow->ui->hybrid_classlabel->setText(hybridclass);
@@ -2137,7 +2206,9 @@ void DBHandler::showHybridInHisto(QString hybrid_id)
     }
     db.open();
     QSqlQuery query ;
-    QString querstr = "SELECT vmm, vmm_class, hybrid_class, "+whichCurve +" FROM latest_measurements WHERE hybrid_id = ?;";
+    QString filters = getAdditionalFilters();
+    QString querstr;
+    querstr = "SELECT vmm, vmm_class, hybrid_class, "+whichCurve +" FROM latest_measurements WHERE hybrid_id = ?;";
     query.prepare(querstr);
     query.bindValue(0,hybrid_id);
     query.exec();
@@ -2287,6 +2358,8 @@ void DBHandler::getVMMClassDistro(){
     QVector<double> counts;
     QVector<double> countsMinus;
     QVector<double> percents;
+    QVector<double> percentsMinus;
+    QVector<double> percentsAll;
     counts << vals.count("A") << vals.count("B") << vals.count("C") << vals.count("D") << vals.count("E");
     countsMinus << vals.count("A-") << vals.count("B-") << vals.count("C-") << vals.count("D-") << vals.count("E-");
     int nHybrids = vals.length();
@@ -2299,20 +2372,43 @@ void DBHandler::getVMMClassDistro(){
     histoMinus->setBrush(QColor(255, 249, 15));
     histoMinus->moveAbove(histo);
     histoMinus->setName("Pedestal Problem");
-    double spacing = (counts[0]+countsMinus[0])*0.1;
+    double spacing = (counts[0]+countsMinus[0])*0.15;
     for(int i=0; i<counts.length();i++){
-        double percent_class = (counts[i]+countsMinus[i])/nHybrids*100;
+        double percent_class_all = (counts[i]+countsMinus[i])/nHybrids*100;
+        double percent_class_Minus = countsMinus[i]/nHybrids*100;
+        double percent_class = counts[i]/nHybrids*100;
         percents.append(percent_class);
-        QCPItemText *textlabel = new QCPItemText(plot);
-        textlabel->setClipToAxisRect(false);
-        textlabel->position->setAxes(plot->xAxis,plot->yAxis);
-        textlabel->position->setType(QCPItemPosition::ptPlotCoords);
-        textlabel->position->setCoords(ticks[i],counts[i]+countsMinus[i]+spacing);
-        textlabel->setText(QString::number(percents[i],'f',1)+"%");
-        textlabel->setPen(QPen(Qt::black));
+        percentsAll.append(percent_class_all);
+        percentsMinus.append(percent_class_Minus);
+        QCPItemText *percentLabelAll = new QCPItemText(plot);
+        percentLabelAll->setClipToAxisRect(false);
+        percentLabelAll->position->setAxes(plot->xAxis,plot->yAxis);
+        percentLabelAll->position->setType(QCPItemPosition::ptPlotCoords);
+        percentLabelAll->position->setCoords(ticks[i],counts[i]+countsMinus[i]+0.2*spacing);
+        percentLabelAll->setText(QString::number(percentsAll[i],'f',1)+"%");
+        percentLabelAll->setPen(QPen(Qt::black));
+        if(countsMinus[i]>0){
+            QCPItemText *percentLabelMinus = new QCPItemText(plot);
+            percentLabelMinus->setClipToAxisRect(false);
+            percentLabelMinus->position->setAxes(plot->xAxis,plot->yAxis);
+            percentLabelMinus->position->setType(QCPItemPosition::ptPlotCoords);
+            percentLabelMinus->position->setCoords(ticks[i],counts[i]+countsMinus[i]+spacing*1.2);
+            percentLabelMinus->setText(QString::number(percentsMinus[i],'f',1)+"%");
+            percentLabelMinus->setPen(QPen(Qt::black));
+            percentLabelMinus->setBrush(QColor(255,249,15));
+            QCPItemText *percentLabel = new QCPItemText(plot);
+            percentLabel->setClipToAxisRect(false);
+            percentLabel->position->setAxes(plot->xAxis,plot->yAxis);
+            percentLabel->position->setType(QCPItemPosition::ptPlotCoords);
+            percentLabel->position->setCoords(ticks[i],counts[i]+countsMinus[i]+spacing*0.2);
+            percentLabel->setText(QString::number(percents[i],'f',1)+"%");
+            percentLabel->setPen(QPen(Qt::black));
+            percentLabel->setBrush(QColor(88,208,116));
+            percentLabelAll->position->setCoords(ticks[i],counts[i]+countsMinus[i]+spacing*2.2);
+        }
     }
     plot->rescaleAxes();
-    plot->yAxis->scaleRange(1.4);
+    plot->yAxis->scaleRange(1.6);
     plot->yAxis->setRangeLower(0);
     plot->replot();
 
