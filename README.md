@@ -24,6 +24,7 @@ qmake VMM_database_browser.pro
 ```
 Run make
 ```
+make clean
 make
 ```
 To use the software then execute:
