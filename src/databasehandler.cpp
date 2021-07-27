@@ -48,6 +48,7 @@ bool DBHandler::downloadDB(QString url){
     m_mainWindow->m_dbwindow->ui->pushButton_redownload->setEnabled(false);
     //m_WebCtrl.deleteResource(request);
     cout << "Request send"<<endl;
+    return true;
 }
 
 bool DBHandler::getLog(QString measID)
@@ -140,6 +141,8 @@ void DBHandler::listAvailableHybrids(){
     table->setWordWrap(true);
     table->resizeRowsToContents();
     table->show();
+    //table->setSortingEnabled(true);
+    //table->sortByColumn(7);
 
     connect(table->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(showDetails()));
     db.close();
@@ -311,8 +314,9 @@ void DBHandler::readSettingFile()
             QString line = QString(file.readLine());
             line.remove('\n');
             QStringList splitted = line.split(QRegExp("\\s+"));
+            cout << splitted[0].toStdString()<< " Size "<< splitted.size()<<endl;
             if(splitted[0]=="MonitoringADCSlope"){
-                if(splitted.count()<5){
+                if(splitted.size()<5){
                     cout << "incomplete configuration"<<endl;
                 }
                 else{
@@ -324,7 +328,7 @@ void DBHandler::readSettingFile()
             }
 
             if(splitted[0]=="MonitoringADCIntercept"){
-                if(splitted.count()<5){
+                if(splitted.size()<5){
                     cout << "incomplete configuration"<<endl;
                 }
                 else{
@@ -335,7 +339,7 @@ void DBHandler::readSettingFile()
                 }
             }
             if(splitted[0]=="Pedestal"){
-                if(splitted.count()<5){
+                if(splitted.size()<5){
                     cout << "incomplete configuration"<<endl;
                 }
                 else{
@@ -346,7 +350,7 @@ void DBHandler::readSettingFile()
                 }
             }
             if(splitted[0]=="AverageTDCRange"){
-                if(splitted.count()<5){
+                if(splitted.size()<5){
                     cout << "incomplete configuration"<<endl;
                 }
                 else{
@@ -357,7 +361,7 @@ void DBHandler::readSettingFile()
                 }
             }
             if(splitted[0]=="BaselineNoise"){
-                if(splitted.count()<3){
+                if(splitted.size()<3){
                     cout << "incomplete configuration,"<<endl;
                 }
                 else{
@@ -366,7 +370,7 @@ void DBHandler::readSettingFile()
                 }
             }
             if(splitted[0]=="ThresholdVariation"){
-                if(splitted.count()<3){
+                if(splitted.size()<3){
                     cout << "incomplete configuration,"<<endl;
                 }
                 else{
@@ -375,7 +379,7 @@ void DBHandler::readSettingFile()
                 }
             }
             if(splitted[0]=="ThresholdDeviation"){
-                if(splitted.count()<3){
+                if(splitted.size()<3){
                     cout << "incomplete configuration,"<<endl;
                 }
                 else{
@@ -390,7 +394,7 @@ void DBHandler::readSettingFile()
                 }
             }
             if(splitted[0]=="ADCCalibrationChannelDeviationInternal"){
-                if(splitted.count()<3){
+                if(splitted.size()<3){
                     cout << "incomplete configuration,"<<endl;
                 }
                 else{
@@ -399,7 +403,7 @@ void DBHandler::readSettingFile()
                 }
             }
             if(splitted[0]=="ADCCalibrationChannelDeviationExternal"){
-                if(splitted.count()<3){
+                if(splitted.size()<3){
                     cout << "incomplete configuration,"<<endl;
                 }
                 else{
@@ -408,7 +412,7 @@ void DBHandler::readSettingFile()
                 }
             }
             if(splitted[0]=="WorkingChannelsExternal"){
-                if(splitted.count()<3){
+                if(splitted.size()<3){
                     cout << "incomplete configuration,"<<endl;
                 }
                 else{
@@ -417,7 +421,7 @@ void DBHandler::readSettingFile()
                 }
             }
             if(splitted[0]=="WorkingChannelsInternal"){
-                if(splitted.count()<3){
+                if(splitted.size()<3){
                     cout << "incomplete configuration,"<<endl;
                 }
                 else{
@@ -426,7 +430,7 @@ void DBHandler::readSettingFile()
                 }
             }
             if(splitted[0]=="ADCCalibrationVertexPosExtern"){
-                if(splitted.count()<3){
+                if(splitted.size()<3){
                     cout << "incomplete configuration,"<<endl;
                 }
                 else{
@@ -435,7 +439,7 @@ void DBHandler::readSettingFile()
                 }
             }
             if(splitted[0]=="ADCCalibrationVertexPosIntern"){
-                if(splitted.count()<3){
+                if(splitted.size()<3){
                     cout << "incomplete configuration,"<<endl;
                 }
                 else{
@@ -444,7 +448,7 @@ void DBHandler::readSettingFile()
                 }
             }
             if(splitted[0]=="DatabaseURL"){
-                if(splitted.count()<2){
+                if(splitted.size()<2){
                     cout << "incomplete configuration,"<<endl;
                 }
                 else{
@@ -452,7 +456,7 @@ void DBHandler::readSettingFile()
                 }
             }
             if(splitted[0]=="DatabaseName"){
-                if(splitted.count()<2){
+                if(splitted.size()<2){
                     cout << "incomplete configuration,"<<endl;
                 }
                 else{
@@ -460,7 +464,7 @@ void DBHandler::readSettingFile()
                 }
             }
             if(splitted[0]=="DatabasePort"){
-                if(splitted.count()<2){
+                if(splitted.size()<2){
                     cout << "incomplete configuration,"<<endl;
                 }
                 else{
@@ -468,7 +472,7 @@ void DBHandler::readSettingFile()
                 }
             }
             if(splitted[0]=="DatabaseUser"){
-                if(splitted.count()<2){
+                if(splitted.size()<2){
                     cout << "incomplete configuration,"<<endl;
                 }
                 else{
@@ -476,7 +480,7 @@ void DBHandler::readSettingFile()
                 }
             }
             if(splitted[0]=="DatabasePassword"){
-                if(splitted.count()<2){
+                if(splitted.size()<2){
                     cout << "incomplete configuration,"<<endl;
                 }
                 else{
@@ -533,7 +537,7 @@ void DBHandler::getCurveSettings(QString caller, double &ideal, double &range, d
             QString line = QString(file.readLine());
             line.remove('\n');
             QStringList splitted = line.split(QRegExp("\\s+"));
-            if(splitted.count()<2){
+            if(splitted.size()<2){
                 cout << "incomplete configuration"<<endl;
             }
             else{
@@ -1614,7 +1618,7 @@ QVector<double> DBHandler::evaluateADCCalibrationFit(QVector<double> datax, QVec
         labels[chip+2]->setStyleSheet("background-color: red");
         markedpos =true;
     }
-    if(fabs(peakheight-maxheightideal)>5*maxheightstd){
+    if(fabs(peakheight-maxheightideal)>6*maxheightstd){
         h_VMMResults[chip].insert(resultinsert2,2);
         labels[chip+2]->setStyleSheet("background-color: red");
         markedpos =true;
@@ -1919,24 +1923,29 @@ void DBHandler::evaluateResults(){
     else{
         hybridclass = "unknown";
     }
+    bool PedestalHybrid = false;
     for(int i=0;i<2;i++){
         if(h_VMMResults[i].value("BadPedestal")==1){
             vmmstati[i].append("-");
             vmmlabels[i]->setText("VMM"+QString::number(i)+": "+vmmstati[i]);
+            PedestalHybrid = true;
         }
+    }
+    if(PedestalHybrid==true){
+        hybridclass.append("-");
     }
 
     m_mainWindow->m_dbwindow->ui->hybrid_classlabel->setText(hybridclass);
-    if(hybridclass=="a"){
+    if(hybridclass=="a" || hybridclass=="a-"){
         m_mainWindow->m_dbwindow->ui->hybrid_classlabel->setStyleSheet("background-color: lightgreen");
     }
-    else if(hybridclass=="b"){
+    else if(hybridclass=="b"||hybridclass=="b-"){
         m_mainWindow->m_dbwindow->ui->hybrid_classlabel->setStyleSheet("background-color: yellow");
     }
-    else if(hybridclass=="c"){
+    else if(hybridclass=="c"|| hybridclass=="c-"){
         m_mainWindow->m_dbwindow->ui->hybrid_classlabel->setStyleSheet("background-color: red");
     }
-    else if(hybridclass=="d"){
+    else if(hybridclass=="d"||hybridclass=="d-"){
         m_mainWindow->m_dbwindow->ui->hybrid_classlabel->setStyleSheet("background-color: black");
         m_mainWindow->m_dbwindow->ui->hybrid_classlabel->setStyleSheet("color: white");
     }
@@ -2384,7 +2393,7 @@ void DBHandler::getVMMClassDistro(){
         percentLabelAll->setClipToAxisRect(false);
         percentLabelAll->position->setAxes(plot->xAxis,plot->yAxis);
         percentLabelAll->position->setType(QCPItemPosition::ptPlotCoords);
-        percentLabelAll->position->setCoords(ticks[i],counts[i]+countsMinus[i]+0.2*spacing);
+        percentLabelAll->position->setCoords(ticks[i],counts[i]+countsMinus[i]+spacing);
         percentLabelAll->setText(QString::number(percentsAll[i],'f',1)+"%");
         percentLabelAll->setPen(QPen(Qt::black));
         if(countsMinus[i]>0){
@@ -2392,7 +2401,7 @@ void DBHandler::getVMMClassDistro(){
             percentLabelMinus->setClipToAxisRect(false);
             percentLabelMinus->position->setAxes(plot->xAxis,plot->yAxis);
             percentLabelMinus->position->setType(QCPItemPosition::ptPlotCoords);
-            percentLabelMinus->position->setCoords(ticks[i],counts[i]+countsMinus[i]+spacing*1.2);
+            percentLabelMinus->position->setCoords(ticks[i],counts[i]+countsMinus[i]+spacing*2);
             percentLabelMinus->setText(QString::number(percentsMinus[i],'f',1)+"%");
             percentLabelMinus->setPen(QPen(Qt::black));
             percentLabelMinus->setBrush(QColor(255,249,15));
@@ -2400,16 +2409,16 @@ void DBHandler::getVMMClassDistro(){
             percentLabel->setClipToAxisRect(false);
             percentLabel->position->setAxes(plot->xAxis,plot->yAxis);
             percentLabel->position->setType(QCPItemPosition::ptPlotCoords);
-            percentLabel->position->setCoords(ticks[i],counts[i]+countsMinus[i]+spacing*0.2);
+            percentLabel->position->setCoords(ticks[i],counts[i]+countsMinus[i]+spacing);
             percentLabel->setText(QString::number(percents[i],'f',1)+"%");
             percentLabel->setPen(QPen(Qt::black));
             percentLabel->setBrush(QColor(88,208,116));
-            percentLabelAll->position->setCoords(ticks[i],counts[i]+countsMinus[i]+spacing*2.2);
+            percentLabelAll->position->setCoords(ticks[i],counts[i]+countsMinus[i]+spacing*3);
         }
     }
     plot->rescaleAxes();
-    plot->yAxis->scaleRange(1.6);
     plot->yAxis->setRangeLower(0);
+    plot->yAxis->setRangeUpper(counts[0]+countsMinus[0]+3.1*spacing);
     plot->replot();
 
 }
@@ -2456,6 +2465,7 @@ void DBHandler::getHybridClassDistro(){
     plot->legend->setFillOrder(QCPLegend::foColumnsFirst);
     plot->plotLayout()->setRowStretchFactor(1, 0.001);
     QCPBars* histo = new QCPBars(plot->xAxis, plot->yAxis);
+    QCPBars* histoMinus = new QCPBars(plot->xAxis,plot->yAxis);
     QVector<double> ticks;
     QVector<QString> labels;
     ticks << 1 << 2 << 3 << 4;
@@ -2471,30 +2481,62 @@ void DBHandler::getHybridClassDistro(){
     plot->xAxis->grid()->setVisible(true);
     plot->xAxis->grid()->setPen(QPen(QColor(130, 130, 130), 0, Qt::DotLine));
     QVector<double> counts;
+    QVector<double> countsMinus;
     QVector<double> percents;
+    QVector<double> percentsMinus;
+    QVector<double> percentsAll;
     counts << vals.count("a")/2 << vals.count("b")/2 << vals.count("c")/2 << vals.count("d")/2;
+    countsMinus << vals.count("a-")/2 << vals.count("b-")/2 << vals.count("c-")/2 << vals.count("d-")/2;
     int nHybrids = vals.length()/2;
     histo->setData(ticks,counts);
-    histo->setName("Hybrid Class");
+    histo->setName("VMM Class");
     histo->setPen(QPen(QColor(88, 208, 116).lighter(170)));
     histo->setBrush(QColor(88, 208, 116));
-    double spacing = counts[0]*0.1;
+    histoMinus->setData(ticks,countsMinus);
+    histoMinus->setPen(QPen(QColor(255, 249, 15).lighter(170)));
+    histoMinus->setBrush(QColor(255, 249, 15));
+    histoMinus->moveAbove(histo);
+    histoMinus->setName("Pedestal Problem");
+    double spacing = (counts[0]+countsMinus[0])*0.15;
     for(int i=0; i<counts.length();i++){
-        double percent_class =counts[i]/nHybrids*100;
+        double percent_class_all = (counts[i]+countsMinus[i])/nHybrids*100;
+        double percent_class_Minus = countsMinus[i]/nHybrids*100;
+        double percent_class = counts[i]/nHybrids*100;
         percents.append(percent_class);
-        QCPItemText *textlabel = new QCPItemText(plot);
-        textlabel->setClipToAxisRect(false);
-        textlabel->position->setAxes(plot->xAxis,plot->yAxis);
-        textlabel->position->setType(QCPItemPosition::ptPlotCoords);
-        textlabel->position->setCoords(ticks[i],counts[i]+spacing);
-        textlabel->setText(QString::number(percents[i],'f',1)+"%");
-        textlabel->setPen(QPen(Qt::black));
+        percentsAll.append(percent_class_all);
+        percentsMinus.append(percent_class_Minus);
+        QCPItemText *percentLabelAll = new QCPItemText(plot);
+        percentLabelAll->setClipToAxisRect(false);
+        percentLabelAll->position->setAxes(plot->xAxis,plot->yAxis);
+        percentLabelAll->position->setType(QCPItemPosition::ptPlotCoords);
+        percentLabelAll->position->setCoords(ticks[i],counts[i]+countsMinus[i]+spacing);
+        percentLabelAll->setText(QString::number(percentsAll[i],'f',1)+"%");
+        percentLabelAll->setPen(QPen(Qt::black));
+        if(countsMinus[i]>0){
+            QCPItemText *percentLabelMinus = new QCPItemText(plot);
+            percentLabelMinus->setClipToAxisRect(false);
+            percentLabelMinus->position->setAxes(plot->xAxis,plot->yAxis);
+            percentLabelMinus->position->setType(QCPItemPosition::ptPlotCoords);
+            percentLabelMinus->position->setCoords(ticks[i],counts[i]+countsMinus[i]+spacing*2);
+            percentLabelMinus->setText(QString::number(percentsMinus[i],'f',1)+"%");
+            percentLabelMinus->setPen(QPen(Qt::black));
+            percentLabelMinus->setBrush(QColor(255,249,15));
+            QCPItemText *percentLabel = new QCPItemText(plot);
+            percentLabel->setClipToAxisRect(false);
+            percentLabel->position->setAxes(plot->xAxis,plot->yAxis);
+            percentLabel->position->setType(QCPItemPosition::ptPlotCoords);
+            percentLabel->position->setCoords(ticks[i],counts[i]+countsMinus[i]+spacing);
+            percentLabel->setText(QString::number(percents[i],'f',1)+"%");
+            percentLabel->setPen(QPen(Qt::black));
+            percentLabel->setBrush(QColor(88,208,116));
+            percentLabelAll->position->setCoords(ticks[i],counts[i]+countsMinus[i]+spacing*3);
+        }
     }
-
     plot->rescaleAxes();
-    plot->yAxis->scaleRange(1.4);
     plot->yAxis->setRangeLower(0);
+    plot->yAxis->setRangeUpper(counts[0]+countsMinus[0]+3.1*spacing);
     plot->replot();
+
 
 }
 
